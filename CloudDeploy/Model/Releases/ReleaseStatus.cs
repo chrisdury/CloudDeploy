@@ -5,9 +5,13 @@ using System.Text;
 
 namespace CloudDeploy.Model.Releases
 {
-    public class ReleaseStatus
+    public enum ReleaseStatus
     {
-        public Guid ReleaseStatusId { get; set; }
-        public string ReleaseStatusName { get; set; }        
+        Pending = 1,
+        InProgress,
+        Complete,
+        Failed,
+        Rollback
+
     }
 }

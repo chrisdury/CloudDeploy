@@ -12,15 +12,15 @@ namespace CloudDeploy.Persistence.Initialisers
     {
         public void InitializeDatabase(ReleaseContext context)
         {
-            var releaseStatuses = new List<ReleaseStatus>()
-            {
-                new ReleaseStatus() { ReleaseStatusId = new Guid(""), ReleaseStatusName ="Pending"},
-                new ReleaseStatus() { ReleaseStatusId = new Guid(""), ReleaseStatusName = "InProgress"},
-                new ReleaseStatus() { ReleaseStatusId = new Guid(""), ReleaseStatusName = "Complete"},
-                new ReleaseStatus() { ReleaseStatusId = new Guid(""), ReleaseStatusName = "Failed"},
-                new ReleaseStatus() { ReleaseStatusId = new Guid(""), ReleaseStatusName = "Rollback"}
-            };
-            releaseStatuses.ForEach(r => context.ReleaseStatuses.Add(r));
+            //var releaseStatuses = new List<ReleaseStatus>()
+            //{
+            //    new ReleaseStatus() { ReleaseStatusId = new Guid(""), ReleaseStatusName ="Pending"},
+            //    new ReleaseStatus() { ReleaseStatusId = new Guid(""), ReleaseStatusName = "InProgress"},
+            //    new ReleaseStatus() { ReleaseStatusId = new Guid(""), ReleaseStatusName = "Complete"},
+            //    new ReleaseStatus() { ReleaseStatusId = new Guid(""), ReleaseStatusName = "Failed"},
+            //    new ReleaseStatus() { ReleaseStatusId = new Guid(""), ReleaseStatusName = "Rollback"}
+            //};
+            //releaseStatuses.ForEach(r => context.ReleaseStatuses.Add(r));
 
         }
     }

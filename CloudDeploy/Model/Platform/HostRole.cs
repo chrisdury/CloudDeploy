@@ -9,5 +9,10 @@ namespace CloudDeploy.Model.Platform
     {
         public Guid HostRoleId { get; set; }
         public string Name { get; set; }
+
+        public HostRole(string name)
+        {
+            Name = name;
+        }
     }
 }

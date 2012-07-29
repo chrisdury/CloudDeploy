@@ -12,10 +12,10 @@ namespace CloudDeploy.Model.Tests
     public class ModelTests
     {
         [TestMethod]
-        public void TestMethod1()
+        public void ModelTests_StubbingStuffOutForFun()
         {
-            var da_config = new DeployableArtefact() { FileName = "WBRT.Configuration.msi", DeployableArtefactName = "Configuration", HostRole = new HostRole() { Name = "All" } };
-            var da_db1 = new DeployableArtefact() { FileName = "WBRT.ProgramData.Lifecycle.DB.msi", DeployableArtefactName = "Lifecycle DB", HostRole = new HostRole() { Name = "SQLServer" } };
+            var da_config = new DeployableArtefact() { FileName = "WBRT.Configuration.msi", DeployableArtefactName = "Configuration", HostRole = new HostRole("All") };
+            var da_db1 = new DeployableArtefact() { FileName = "WBRT.ProgramData.Lifecycle.DB.msi", DeployableArtefactName = "Lifecycle DB", HostRole = new HostRole("SQLServer") };
 
             var build = new Build() { BuildDate = DateTime.Now, BuildLabel = "1.0.500.0" };
 
@@ -27,13 +27,14 @@ namespace CloudDeploy.Model.Tests
                 Environment = new PlatformEnvironment() { Name="TEST" },
                 HostName = "TESTWBRTDB"      
             };
-            dt1.HostRoles.Add(new HostRole() { Name = "SQLServer" });
+            dt1.HostRoles.Add(new HostRole("SQLServer"));
 
             var rp = new ReleasePackage();
             rp.DeploymentTargets.Add(dt1);
             rp.DeploymentUnits.Add(du_config);
             rp.DeploymentUnits.Add(du_db1);
-            rp.ReleaseStatus = new ReleaseStatus() { ReleaseStatusName = "Complete" };
+            rp.ReleaseDate = DateTime.Now.AddHours(1);
+            rp.ReleaseStatus = ReleaseStatus.Pending;
 
 
 
