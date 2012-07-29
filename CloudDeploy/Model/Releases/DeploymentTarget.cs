@@ -14,7 +14,13 @@ namespace CloudDeploy.Model.Releases
 
         public string HostName { get; set; }
 
-        public HostRole[] HostRoles { get; set; }
+        public List<HostRole> HostRoles { get; set; }
+
+        public DeploymentTarget()
+        {
+            HostRoles = new List<HostRole>();
+
+        }
 
     }
 }

@@ -5,12 +5,9 @@ using System.Text;
 
 namespace CloudDeploy.Model.Platform
 {
-    public enum HostRole
+    public class HostRole
     {
-        All = 1,
-        ActiveDirectory,
-        SQLServer,
-        SharePoint,
-        CRM
+        public Guid HostRoleId { get; set; }
+        public string Name { get; set; }
     }
 }

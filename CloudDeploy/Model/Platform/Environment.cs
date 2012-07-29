@@ -5,11 +5,9 @@ using System.Text;
 
 namespace CloudDeploy.Model.Platform
 {
-    public enum PlatformEnvironment
+    public class PlatformEnvironment
     {
-        Development=1,
-        Test,
-        Staging,
-        Production
+        public Guid PlatformEnvironmentId { get; set; }
+        public string Name { get; set; }
     }
 }
