@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CloudDeploy.Model.Platform;
 using CloudDeploy.Model.Releases;
 
-namespace Model.Tests
+namespace CloudDeploy.Model.Tests
 {
     [TestClass]
     public class ModelTests
@@ -33,7 +33,7 @@ namespace Model.Tests
             rp.DeploymentTargets.Add(dt1);
             rp.DeploymentUnits.Add(du_config);
             rp.DeploymentUnits.Add(du_db1);
-            rp.ReleaseStatus = ReleaseStatus.Complete;
+            rp.ReleaseStatus = new ReleaseStatus() { ReleaseStatusName = "Complete" };
 
 
 
