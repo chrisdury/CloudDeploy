@@ -7,15 +7,15 @@ using CloudDeploy.Model.Platform;
 
 namespace CloudDeploy.Model.Tests.Initial
 {
-    internal class BaseModelTest
+    public class BaseModelTest
     {
-        protected List<Build> Builds { get; set; }
-        protected List<DeploymentTarget> DeploymentTargets { get; set; }
-        protected List<DeploymentUnit> DeploymentUnits { get; set; }
-        protected List<DeployableArtefact> DeployableArtefacts { get; set; }
+        public List<Build> Builds { get; set; }
+        public List<Host> Hosts { get; set; }
+        public List<DeploymentUnit> DeploymentUnits { get; set; }
+        public List<DeployableArtefact> DeployableArtefacts { get; set; }
 
 
-        protected void PopulateTestData()
+        public void PopulateTestData()
         {
             Builds = new List<Build>()
             {
@@ -27,42 +27,42 @@ namespace CloudDeploy.Model.Tests.Initial
                 new Build() { BuildDate = DateTime.Now.AddDays(-5), BuildID = Guid.NewGuid(), BuildLabel="1.0.600.0", BuildName="1.0.600.0", DropLocation="c:\\builds"}
             };
 
-            DeploymentTargets = new List<DeploymentTarget>()
+            Hosts = new List<Host>()
             {
-                new DeploymentTarget() { 
+                new Host() { 
                     DeploymentTargetID = Guid.NewGuid(), 
-                    Environment = new Platform.PlatformEnvironment() { Name = "TEST" },
+                    Environment = "TEST",
                     HostName="TESTWBRTDB",
-                    HostRoles = new List<Platform.HostRole>() { new HostRole("SQL Server")}
+                    HostRole = "SQL Server"
                 },
-                new DeploymentTarget() { 
+                new Host() { 
                     DeploymentTargetID = Guid.NewGuid(), 
-                    Environment = new Platform.PlatformEnvironment() { Name = "TEST" },
+                    Environment = "TEST",
                     HostName="TESTWBRTSP",
-                    HostRoles = new List<Platform.HostRole>() { new HostRole("SharePoint")}
+                    HostRole = "SharePoint"
                 },
-                new DeploymentTarget() { 
+                new Host() { 
                     DeploymentTargetID = Guid.NewGuid(), 
-                    Environment = new Platform.PlatformEnvironment() { Name = "TEST" },
+                    Environment = "TEST",
                     HostName="TESTWBRTCRM",
-                    HostRoles = new List<Platform.HostRole>() { new HostRole("CRM")}
+                    HostRole = "CRM"
                 },
-                new DeploymentTarget() { 
+                new Host() { 
                     DeploymentTargetID = Guid.NewGuid(), 
-                    Environment = new Platform.PlatformEnvironment() { Name = "TEST" },
+                    Environment = "TEST",
                     HostName="CHRISWBRT",
-                    HostRoles = new List<Platform.HostRole>() { new HostRole("SQL Server"), new HostRole("SharePoint"), new HostRole("CRM")}
+                    HostRole = "SQL Server|SharePoint|CRM"
                 }
             };
 
             DeployableArtefacts = new List<DeployableArtefact>()
             {
-                new DeployableArtefact() { DeployableArtefactID = Guid.NewGuid(), DeployableArtefactName="WBRT.Configuration", FileName="WBRT.Configuration.msi", HostRole = new HostRole("ALL"), InstallationScript="msiexec /i wbrt.configuration.msi", RollbackScript="msiexec /x wbrt.configuration.msi"},
-                new DeployableArtefact() { DeployableArtefactID = Guid.NewGuid(), DeployableArtefactName="WBRT.Security.AccessControl", FileName="WBRT.Security.AccessControl.msi", HostRole = new HostRole("SQL Server"), InstallationScript="WBRT.Security.AccessControl", RollbackScript="Uninstall WBRT.Security.AccessControl"},
-                new DeployableArtefact() { DeployableArtefactID = Guid.NewGuid(), DeployableArtefactName="WBRT.Security.AccessControl.DB", FileName="WBRT.Security.AccessControl.DB", HostRole = new HostRole("SQL Server"), InstallationScript="asfdasfd", RollbackScript="asdfasdf"},
-                new DeployableArtefact() { DeployableArtefactID = Guid.NewGuid(), DeployableArtefactName="SPClaimProvider", FileName="WBRT.Security.AccessControl.SPClaimProvider.wsp", HostRole = new HostRole("SharePoint"), InstallationScript="", RollbackScript=""},
-                new DeployableArtefact() { DeployableArtefactID = Guid.NewGuid(), DeployableArtefactName="WBRT.HealthServices.HealthServiceInfo", FileName="WBRT.HealthServices.HealthServiceInfo.msi", HostRole = new HostRole("CRM"), InstallationScript="", RollbackScript=""},
-                new DeployableArtefact() { DeployableArtefactID = Guid.NewGuid(), DeployableArtefactName="ProgramReportSubmissionProxy", FileName="ProgramReportSubmissionProxy", HostRole = new HostRole("SharePoint"), InstallationScript="", RollbackScript=""}
+                new DeployableArtefact() { DeployableArtefactID = Guid.NewGuid(), DeployableArtefactName="WBRT.Configuration", FileName="WBRT.Configuration.msi", HostRole = "ALL", InstallationScript="msiexec /i wbrt.configuration.msi", RollbackScript="msiexec /x wbrt.configuration.msi"},
+                new DeployableArtefact() { DeployableArtefactID = Guid.NewGuid(), DeployableArtefactName="WBRT.Security.AccessControl", FileName="WBRT.Security.AccessControl.msi", HostRole = "SQL Server", InstallationScript="WBRT.Security.AccessControl", RollbackScript="Uninstall WBRT.Security.AccessControl"},
+                new DeployableArtefact() { DeployableArtefactID = Guid.NewGuid(), DeployableArtefactName="WBRT.Security.AccessControl.DB", FileName="WBRT.Security.AccessControl.DB", HostRole = "SQL Server", InstallationScript="asfdasfd", RollbackScript="asdfasdf"},
+                new DeployableArtefact() { DeployableArtefactID = Guid.NewGuid(), DeployableArtefactName="SPClaimProvider", FileName="WBRT.Security.AccessControl.SPClaimProvider.wsp", HostRole = "SharePoint", InstallationScript="", RollbackScript=""},
+                new DeployableArtefact() { DeployableArtefactID = Guid.NewGuid(), DeployableArtefactName="WBRT.HealthServices.HealthServiceInfo", FileName="WBRT.HealthServices.HealthServiceInfo.msi", HostRole = "CRM", InstallationScript="", RollbackScript=""},
+                new DeployableArtefact() { DeployableArtefactID = Guid.NewGuid(), DeployableArtefactName="ProgramReportSubmissionProxy", FileName="ProgramReportSubmissionProxy", HostRole = "SharePoint", InstallationScript="", RollbackScript=""}
             };
 
 

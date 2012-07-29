@@ -12,6 +12,6 @@ namespace CloudDeploy.Model.Platform
         public string FileName { get; set; }
         public string InstallationScript { get; set; }
         public string RollbackScript { get; set; }
-        public HostRole HostRole { get; set; }
+        public string HostRole { get; set; }
     }
 }

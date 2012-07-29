@@ -24,7 +24,7 @@ namespace CloudDeploy.Persistence.Tests
         {
             var rc = new ReleaseContext();
 
-            var query = from dt in rc.DeploymentTargets
+            var query = from dt in rc.Builds
                         select dt;
 
             Assert.IsTrue(query.Count() >= 0);

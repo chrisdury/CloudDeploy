@@ -11,7 +11,7 @@ namespace CloudDeploy.Persistence.Contexts
     {
         public DbSet<Build> Builds { get; set; }
         public DbSet<ReleasePackage> ReleasePackages { get; set; }
-        public DbSet<DeploymentTarget> DeploymentTargets { get; set; }
+       // public DbSet<DeploymentTarget> DeploymentTargets { get; set; }
         public DbSet<DeploymentUnit> DeploymentUnits { get; set; }
         public ReleaseContext() : base("name=CloudDeploy.Model") { }
 
