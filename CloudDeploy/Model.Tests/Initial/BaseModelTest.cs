@@ -51,7 +51,7 @@ namespace CloudDeploy.Model.Tests.Initial
                     DeploymentTargetID = Guid.NewGuid(), 
                     Environment = "TEST",
                     HostName="CHRISWBRT",
-                    HostRole = "SQL Server|SharePoint|CRM"
+                    HostRole = "SQL Server,SharePoint,CRM"
                 }
             };
 

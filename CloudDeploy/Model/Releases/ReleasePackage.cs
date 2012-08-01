@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CloudDeploy.Model.Platform;
+using System.Threading.Tasks;
 
 namespace CloudDeploy.Model.Releases
 {
@@ -16,6 +17,12 @@ namespace CloudDeploy.Model.Releases
         public List<DeploymentUnit> DeploymentUnits { get; set; }
         public List<HostReleaseRecord> HostReleaseRecords { get; set; }
 
+        public event DeployHander OnDeploymentUnitDeploying = delegate {};
+        public event DeployHander OnDeploymentUnitDeployed = delegate { };
+        public delegate void DeployHander(ReleasePackage rp, DeploymentUnit du, Host h);
+        
+
+
         public ReleasePackage(string releaseName, DateTime releaseDate, string environment)
         {
             DeploymentUnits = new List<DeploymentUnit>();
@@ -24,6 +31,14 @@ namespace CloudDeploy.Model.Releases
             ReleaseDate = releaseDate;
             PlatformEnvironment = environment;
             ReleaseStatus = Releases.ReleaseStatus.Pending;
+
+            OnDeploymentUnitDeployed += new DeployHander(ReleasePackage_OnDeploymentUnitDeployed);
+
+        }
+
+        void ReleasePackage_OnDeploymentUnitDeployed(ReleasePackage rp, DeploymentUnit du, Host h)
+        {
+            HostReleaseRecords.Add(new HostReleaseRecord() { DeploymentUnit = du, Host = h, HostReleaseRecordId = Guid.NewGuid() });
         }
 
 
@@ -34,18 +49,45 @@ namespace CloudDeploy.Model.Releases
         }
 
 
-        public void Deploy(List<Host> hosts)
+        public void DeployToHosts(List<Host> hosts)
         {
-            foreach (var dp in DeploymentUnits)
+            foreach (var du in DeploymentUnits)
             {
                 foreach (var h in hosts.Where(h => h.Environment == PlatformEnvironment))
                 {
-                    if (h.HostRole.Contains(dp.DeployableArtefact.HostRole) || dp.DeployableArtefact.HostRole == "ALL")
+                    if (h.HostRole.Contains(du.DeployableArtefact.HostRole) || du.DeployableArtefact.HostRole == "ALL")
                     {
-                        HostReleaseRecords.Add(new HostReleaseRecord() { DeploymentUnit = dp, Host = h, HostReleaseRecordId = Guid.NewGuid() });
+                        OnDeploymentUnitDeploying(this, du, h);
+                        du.Deploy();
+                        OnDeploymentUnitDeployed(this, du, h);
                     }
                 }
             }
+        }
+
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            if (HostReleaseRecords.Count() > 0)
+            {
+                var rowtemplate = "|{0,-15}|{1,-15}|{2,-30}|{3,-50}|{4,-10}|";
+                sb.AppendLine(String.Format(rowtemplate, "Env", "HostName", "Role", "Artefact", "Build"));
+                foreach (var hrr in HostReleaseRecords)
+                {
+                    sb.AppendLine(String.Format(rowtemplate,
+                        hrr.Host.Environment,
+                        hrr.Host.HostName,
+                        hrr.Host.HostRole,
+                        hrr.DeploymentUnit.DeployableArtefact.DeployableArtefactName,
+                        hrr.DeploymentUnit.Build.BuildLabel));
+                }
+            }
+            else
+            {
+                sb.AppendLine("This package has not been deployed");
+            }
+            return sb.ToString();            
         }
 
 

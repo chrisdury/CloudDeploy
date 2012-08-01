@@ -21,22 +21,25 @@ namespace CloudDeploy.Model.Tests
             // need to have deployment units
 
 
-            //var du1 = new DeploymentUnit(Builds.First(), DeployableArtefacts[0]);
+            var du1 = new DeploymentUnit(Builds.First(), DeployableArtefacts[0]);
             var du2 = new DeploymentUnit(Builds.First(), DeployableArtefacts[1]);
-            //var du3 = new DeploymentUnit(Builds.First(), DeployableArtefacts[2]);
-            //rp.AddDeploymentUnit(du1);
+            var du3 = new DeploymentUnit(Builds.First(), DeployableArtefacts[2]);
+            rp.AddDeploymentUnit(du1);
             rp.AddDeploymentUnit(du2);
-            //rp.AddDeploymentUnit(du3);
+            rp.AddDeploymentUnit(du3);
+            
+            rp.DeployToHosts(Hosts);
 
-
-            rp.Deploy(Hosts);
 
             Assert.IsTrue(rp.HostReleaseRecords.Count() > 0);
+
+            var s = rp.ToString();
 
 
 
 
         }
+
 
     }
 }

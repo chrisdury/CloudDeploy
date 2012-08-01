@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CloudDeploy.Model.Platform;
+using System.Diagnostics;
 
 namespace CloudDeploy.Model.Releases
 {
@@ -20,6 +21,14 @@ namespace CloudDeploy.Model.Releases
             Build = build;
             DeployableArtefact = deployableArtefact;
         }
+
+
+        public void Deploy()
+        {
+            Trace.Write("Deploying...");
+
+        }
+
 
     }
 }
