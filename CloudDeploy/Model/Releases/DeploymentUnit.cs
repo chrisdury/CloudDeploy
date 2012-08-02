@@ -23,13 +23,24 @@ namespace CloudDeploy.Model.Releases
             DeployableArtefact = deployableArtefact;
             HostDeployments = new List<HostDeployment>();
             Status = ReleaseStatus.Pending;
+            Trace.WriteLine("Created new " + this.ToString());
         }
 
 
         public void DeployToHost(Host host)
         {
+            if (host == null) throw new ArgumentNullException("host", "host must not be null");
+            Trace.WriteLine("Adding new Host to " + ToString());
             HostDeployments.Add(new HostDeployment() { DeploymentUnit = this, Host = host });
             Status = ReleaseStatus.InProgress;
         }
+
+
+        public override string ToString()
+        {
+            return String.Format("DeploymentUnit: id:{0} status:{1}", DeploymentUnitID, Status);
+        }
+
+
     }
 }
