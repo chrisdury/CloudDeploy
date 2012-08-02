@@ -6,10 +6,13 @@ using CloudDeploy.Model.Platform;
 
 namespace CloudDeploy.Model.Releases
 {
-    public class HostReleaseRecord
+    public class HostDeployment
     {
-        public Guid HostReleaseRecordId { get; set; }
+        public Guid HostDeploymentId { get; set; }
         public Host Host { get; set; }
         public DeploymentUnit DeploymentUnit { get; set; }
+        public ReleaseStatus Status { get; set; }
+
+        public HostDeployment() { Status = ReleaseStatus.Pending; }
     }
 }

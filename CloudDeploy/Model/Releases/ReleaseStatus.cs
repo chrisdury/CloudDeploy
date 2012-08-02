@@ -11,7 +11,7 @@ namespace CloudDeploy.Model.Releases
         InProgress,
         Complete,
         Failed,
-        Rollback
+        Rollingback,
 
     }
 }

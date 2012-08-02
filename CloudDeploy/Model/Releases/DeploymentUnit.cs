@@ -12,7 +12,7 @@ namespace CloudDeploy.Model.Releases
         public Guid DeploymentUnitID { get; set; }
         public Build Build { get; set; }
         public DeployableArtefact DeployableArtefact { get; set; }
-        public List<Host> DeployedHosts { get; set; }
+        public List<HostDeployment> HostDeployments { get; set; }
         public ReleaseStatus Status { get; set; }
 
         public DeploymentUnit(Build build, DeployableArtefact deployableArtefact)
@@ -21,17 +21,15 @@ namespace CloudDeploy.Model.Releases
             if (deployableArtefact == null) throw new ArgumentNullException("deployableArtefact must not be null");
             Build = build;
             DeployableArtefact = deployableArtefact;
-            DeployedHosts = new List<Host>();
+            HostDeployments = new List<HostDeployment>();
+            Status = ReleaseStatus.Pending;
         }
 
 
         public void DeployToHost(Host host)
         {
-            Trace.Write("Deploying to host:" + host.HostName);
-            DeployedHosts.Add(host);
-            this.Status = ReleaseStatus.InProgress;
+            HostDeployments.Add(new HostDeployment() { DeploymentUnit = this, Host = host });
+            Status = ReleaseStatus.InProgress;
         }
-
-
     }
 }

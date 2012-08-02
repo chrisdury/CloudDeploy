@@ -62,19 +62,29 @@ namespace CloudDeploy.Model.Releases
 
             if (DeploymentUnits.Count() > 0)
             {
-                var rowtemplate = "|{0,-50}|{1,-10}|{2,-15}|{3,-15}|{4,-25}|";
-                sb.AppendLine(String.Format(rowtemplate, "Artefact", "Build", "Env", "HostName", "Role"));
+                var rowtemplate = "|{0,-50}|{1,-10}|{2,-15}|{3,-15}|{4,-25}|{5,-10}|";
+                sb.AppendLine(String.Format(rowtemplate, "Artefact", "Build", "Env", "HostName", "Role", "Status"));
 
                 foreach (var deploymentUnit in DeploymentUnits)
                 {
-                    foreach (var host in deploymentUnit.DeployedHosts)
-                    {
-                        sb.AppendLine(String.Format(rowtemplate,
+                    sb.AppendLine(String.Format(rowtemplate,
                             deploymentUnit.DeployableArtefact.DeployableArtefactName,
                             deploymentUnit.Build.BuildLabel,
-                            host.Environment,
-                            host.HostName,
-                            host.HostRole
+                            "",
+                            "",
+                            "",
+                            deploymentUnit.Status
+                            )
+                        );
+                    foreach (var hostDeployment in deploymentUnit.HostDeployments)
+                    {
+                        sb.AppendLine(String.Format(rowtemplate,
+                            "",
+                            "",
+                            hostDeployment.Host.Environment,
+                            hostDeployment.Host.HostName,
+                            hostDeployment.Host.HostRole,
+                            hostDeployment.Status
                             )
                         );
                     }
