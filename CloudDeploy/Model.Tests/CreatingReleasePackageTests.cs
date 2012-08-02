@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CloudDeploy.Model.Tests.Initial;
 using CloudDeploy.Model.Releases;
+using System.Diagnostics;
 
 namespace CloudDeploy.Model.Tests
 {
@@ -16,30 +17,33 @@ namespace CloudDeploy.Model.Tests
         {
             PopulateTestData();
 
-            // create a release package
-            var rp = new ReleasePackage("Test Release 1", DateTime.Now.AddMinutes(20), "TEST");
-            // need to have deployment units
-
-
-            var du1 = new DeploymentUnit(Builds.First(), DeployableArtefacts[0]);
-            var du2 = new DeploymentUnit(Builds.First(), DeployableArtefacts[1]);
-            var du3 = new DeploymentUnit(Builds.First(), DeployableArtefacts[2]);
-            rp.AddDeploymentUnit(du1);
-            rp.AddDeploymentUnit(du2);
-            rp.AddDeploymentUnit(du3);
+            // create some release packages
+            var rp_test = new ReleasePackage("Test Release 1", DateTime.Now.AddMinutes(20), "TEST");
+            var rp_staging = new ReleasePackage("Staging Release 1", DateTime.Now.AddMinutes(20), "STAGE");
             
-            rp.DeployToHosts(Hosts);
+            // need to have deployment units
+            DeployableArtefacts
+                .Where(da => da.HostRole == "SQL Server")
+                .ToList()
+                .ForEach(da =>
+                {
+                    rp_test.AddDeploymentUnit(new DeploymentUnit(Builds.First(), da));
+                    rp_staging.AddDeploymentUnit(new DeploymentUnit(Builds[2], da));
+                });
 
 
-            Assert.IsTrue(rp.HostReleaseRecords.Count() > 0);
+            // deploy to some hosts (we will target them all, but use the environment filter)           
+            rp_test.DeployToHosts(Hosts);
 
-            var s = rp.ToString();
+            // filter the incoming hosts for fun
+            rp_staging.DeployToHosts(Hosts.Where(h => h.Environment == "STAGE").ToList());
 
+            Debug.WriteLine("");
+            Debug.Write(rp_test.ToString());
 
-
+            Debug.WriteLine("");
+            Debug.WriteLine(rp_staging.ToString());
 
         }
-
-
     }
 }

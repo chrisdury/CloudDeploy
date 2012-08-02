@@ -49,10 +49,55 @@ namespace CloudDeploy.Model.Tests.Initial
                 },
                 new Host() { 
                     DeploymentTargetID = Guid.NewGuid(), 
-                    Environment = "TEST",
+                    Environment = "DEV",
                     HostName="CHRISWBRT",
                     HostRole = "SQL Server,SharePoint,CRM"
-                }
+                },
+                new Host() { 
+                    DeploymentTargetID = Guid.NewGuid(), 
+                    Environment = "STAGE",
+                    HostName="OBSIFASTGSQL01",
+                    HostRole = "SQL Server"
+                },
+                new Host() { 
+                    DeploymentTargetID = Guid.NewGuid(), 
+                    Environment = "STAGE",
+                    HostName="OBSIFASTGSPS01",
+                    HostRole = "SharePoint,CRM"
+                },
+                new Host() { 
+                    DeploymentTargetID = Guid.NewGuid(), 
+                    Environment = "PROD",
+                    HostName="OBSIFASQL01",
+                    HostRole = "SQL Server"
+                },
+                new Host() { 
+                    DeploymentTargetID = Guid.NewGuid(), 
+                    Environment = "PROD",
+                    HostName="OBSIFASPS01",
+                    HostRole = "SharePoint"
+                },
+                new Host() { 
+                    DeploymentTargetID = Guid.NewGuid(), 
+                    Environment = "PROD",
+                    HostName="OBSIFASPS02",
+                    HostRole = "SharePoint"
+                },
+                new Host() { 
+                    DeploymentTargetID = Guid.NewGuid(), 
+                    Environment = "PROD",
+                    HostName="OBSIFACRM01",
+                    HostRole = "CRM"
+                },
+                new Host() { 
+                    DeploymentTargetID = Guid.NewGuid(), 
+                    Environment = "PROD",
+                    HostName="OBSIFACRM02",
+                    HostRole = "CRM"
+                },
+
+                
+                
             };
 
             DeployableArtefacts = new List<DeployableArtefact>()

@@ -15,30 +15,18 @@ namespace CloudDeploy.Model.Releases
         public string PlatformEnvironment { get; set; }
         public ReleaseStatus ReleaseStatus { get; set; }
         public List<DeploymentUnit> DeploymentUnits { get; set; }
-        public List<HostReleaseRecord> HostReleaseRecords { get; set; }
 
-        public event DeployHander OnDeploymentUnitDeploying = delegate {};
+        public event DeployHander OnDeploymentUnitDeploying = delegate { };
         public event DeployHander OnDeploymentUnitDeployed = delegate { };
         public delegate void DeployHander(ReleasePackage rp, DeploymentUnit du, Host h);
-        
-
 
         public ReleasePackage(string releaseName, DateTime releaseDate, string environment)
         {
             DeploymentUnits = new List<DeploymentUnit>();
-            HostReleaseRecords = new List<HostReleaseRecord>();
             ReleaseName = releaseName;
             ReleaseDate = releaseDate;
             PlatformEnvironment = environment;
             ReleaseStatus = Releases.ReleaseStatus.Pending;
-
-            OnDeploymentUnitDeployed += new DeployHander(ReleasePackage_OnDeploymentUnitDeployed);
-
-        }
-
-        void ReleasePackage_OnDeploymentUnitDeployed(ReleasePackage rp, DeploymentUnit du, Host h)
-        {
-            HostReleaseRecords.Add(new HostReleaseRecord() { DeploymentUnit = du, Host = h, HostReleaseRecordId = Guid.NewGuid() });
         }
 
 
@@ -51,15 +39,16 @@ namespace CloudDeploy.Model.Releases
 
         public void DeployToHosts(List<Host> hosts)
         {
+            this.ReleaseStatus = Releases.ReleaseStatus.InProgress;
             foreach (var du in DeploymentUnits)
             {
-                foreach (var h in hosts.Where(h => h.Environment == PlatformEnvironment))
+                foreach (var host in hosts.Where(h => h.Environment == PlatformEnvironment))
                 {
-                    if (h.HostRole.Contains(du.DeployableArtefact.HostRole) || du.DeployableArtefact.HostRole == "ALL")
+                    if (host.HostRole.Contains(du.DeployableArtefact.HostRole) || du.DeployableArtefact.HostRole == "ALL")
                     {
-                        OnDeploymentUnitDeploying(this, du, h);
-                        du.Deploy();
-                        OnDeploymentUnitDeployed(this, du, h);
+                        OnDeploymentUnitDeploying(this, du, host);
+                        du.DeployToHost(host);
+                        //OnDeploymentUnitDeployed(this, du, host); // we can't know that it has been deployed
                     }
                 }
             }
@@ -69,28 +58,33 @@ namespace CloudDeploy.Model.Releases
         public override string ToString()
         {
             var sb = new StringBuilder();
-            if (HostReleaseRecords.Count() > 0)
+            sb.AppendLine(String.Format("Release Package: {0} {1} ", this.ReleaseName, this.ReleaseDate));
+
+            if (DeploymentUnits.Count() > 0)
             {
-                var rowtemplate = "|{0,-15}|{1,-15}|{2,-30}|{3,-50}|{4,-10}|";
-                sb.AppendLine(String.Format(rowtemplate, "Env", "HostName", "Role", "Artefact", "Build"));
-                foreach (var hrr in HostReleaseRecords)
+                var rowtemplate = "|{0,-50}|{1,-10}|{2,-15}|{3,-15}|{4,-25}|";
+                sb.AppendLine(String.Format(rowtemplate, "Artefact", "Build", "Env", "HostName", "Role"));
+
+                foreach (var deploymentUnit in DeploymentUnits)
                 {
-                    sb.AppendLine(String.Format(rowtemplate,
-                        hrr.Host.Environment,
-                        hrr.Host.HostName,
-                        hrr.Host.HostRole,
-                        hrr.DeploymentUnit.DeployableArtefact.DeployableArtefactName,
-                        hrr.DeploymentUnit.Build.BuildLabel));
+                    foreach (var host in deploymentUnit.DeployedHosts)
+                    {
+                        sb.AppendLine(String.Format(rowtemplate,
+                            deploymentUnit.DeployableArtefact.DeployableArtefactName,
+                            deploymentUnit.Build.BuildLabel,
+                            host.Environment,
+                            host.HostName,
+                            host.HostRole
+                            )
+                        );
+                    }
                 }
             }
             else
             {
-                sb.AppendLine("This package has not been deployed");
+                sb.AppendLine("This package has no deployment units");
             }
-            return sb.ToString();            
+            return sb.ToString();
         }
-
-
-
     }
 }
