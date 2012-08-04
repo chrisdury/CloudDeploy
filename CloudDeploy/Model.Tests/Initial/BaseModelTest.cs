@@ -30,67 +30,67 @@ namespace CloudDeploy.Model.Tests.Initial
             Hosts = new List<Host>()
             {
                 new Host() { 
-                    DeploymentTargetID = Guid.NewGuid(), 
+                    HostID = Guid.NewGuid(), 
                     Environment = "TEST",
                     HostName="TESTWBRTDB",
                     HostRole = "SQL Server"
                 },
                 new Host() { 
-                    DeploymentTargetID = Guid.NewGuid(), 
+                    HostID = Guid.NewGuid(), 
                     Environment = "TEST",
                     HostName="TESTWBRTSP",
                     HostRole = "SharePoint"
                 },
                 new Host() { 
-                    DeploymentTargetID = Guid.NewGuid(), 
+                    HostID = Guid.NewGuid(), 
                     Environment = "TEST",
                     HostName="TESTWBRTCRM",
                     HostRole = "CRM"
                 },
                 new Host() { 
-                    DeploymentTargetID = Guid.NewGuid(), 
+                    HostID = Guid.NewGuid(), 
                     Environment = "DEV",
                     HostName="CHRISWBRT",
                     HostRole = "SQL Server,SharePoint,CRM"
                 },
                 new Host() { 
-                    DeploymentTargetID = Guid.NewGuid(), 
+                    HostID = Guid.NewGuid(), 
                     Environment = "STAGE",
                     HostName="OBSIFASTGSQL01",
                     HostRole = "SQL Server"
                 },
                 new Host() { 
-                    DeploymentTargetID = Guid.NewGuid(), 
+                    HostID = Guid.NewGuid(), 
                     Environment = "STAGE",
                     HostName="OBSIFASTGSPS01",
                     HostRole = "SharePoint,CRM"
                 },
                 new Host() { 
-                    DeploymentTargetID = Guid.NewGuid(), 
+                    HostID = Guid.NewGuid(), 
                     Environment = "PROD",
                     HostName="OBSIFASQL01",
                     HostRole = "SQL Server"
                 },
                 new Host() { 
-                    DeploymentTargetID = Guid.NewGuid(), 
+                    HostID = Guid.NewGuid(), 
                     Environment = "PROD",
                     HostName="OBSIFASPS01",
                     HostRole = "SharePoint"
                 },
                 new Host() { 
-                    DeploymentTargetID = Guid.NewGuid(), 
+                    HostID = Guid.NewGuid(), 
                     Environment = "PROD",
                     HostName="OBSIFASPS02",
                     HostRole = "SharePoint"
                 },
                 new Host() { 
-                    DeploymentTargetID = Guid.NewGuid(), 
+                    HostID = Guid.NewGuid(), 
                     Environment = "PROD",
                     HostName="OBSIFACRM01",
                     HostRole = "CRM"
                 },
                 new Host() { 
-                    DeploymentTargetID = Guid.NewGuid(), 
+                    HostID = Guid.NewGuid(), 
                     Environment = "PROD",
                     HostName="OBSIFACRM02",
                     HostRole = "CRM"

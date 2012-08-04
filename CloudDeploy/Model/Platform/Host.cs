@@ -9,7 +9,7 @@ namespace CloudDeploy.Model.Platform
     {
         public string Environment { get; set; }
 
-        public Guid DeploymentTargetID { get; set; }
+        public Guid HostID { get; set; }
 
         public string HostName { get; set; }
 
@@ -19,6 +19,11 @@ namespace CloudDeploy.Model.Platform
         {
 
 
+        }
+
+        public override string ToString()
+        {
+            return String.Format("ID: {0} HostName: {1} Role: {2} Environment: {3}", HostID, HostName, HostRole, Environment);
         }
 
     }
