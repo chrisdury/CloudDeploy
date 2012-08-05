@@ -13,5 +13,12 @@ namespace CloudDeploy.Model.Releases
         public string BuildName { get; set; }
         public DateTime BuildDate { get; set; }
         public IEnumerable<DeploymentUnit> DeploymentUnits { get; set; }
+
+
+        public override string ToString()
+        {
+            return String.Format("ID: {0} BuildName: {1} Label: {2} Date: {3}", BuildID, BuildName, BuildLabel, BuildDate);
+        }
+
     }
 }
