@@ -15,6 +15,8 @@ namespace CloudDeploy.Model.Releases
         public List<HostDeployment> HostDeployments { get; set; }
         public ReleaseStatus Status { get; set; }
 
+        public DeploymentUnit() { }
+
         public DeploymentUnit(Build build, DeployableArtefact deployableArtefact)
         {
             if (build == null) throw new ArgumentNullException("build must not be null");
@@ -23,6 +25,7 @@ namespace CloudDeploy.Model.Releases
             DeployableArtefact = deployableArtefact;
             HostDeployments = new List<HostDeployment>();
             Status = ReleaseStatus.Pending;
+            DeploymentUnitID = Guid.NewGuid();
             Trace.WriteLine("Created new " + this.ToString());
         }
 
@@ -38,7 +41,7 @@ namespace CloudDeploy.Model.Releases
 
         public override string ToString()
         {
-            return String.Format("DeploymentUnit: id:{0} status:{1}", DeploymentUnitID, Status);
+            return String.Format("DeploymentUnit: id:{0} status:{1} artefact:{2} build:{3}", DeploymentUnitID, Status, DeployableArtefact.DeployableArtefactName, Build.BuildLabel);
         }
 
 

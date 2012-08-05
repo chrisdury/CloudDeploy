@@ -17,6 +17,7 @@ namespace CloudDeploy.Clients.ConsoleApp
                 var command = Args.Configuration.Configure<CommandObject>().CreateAndBind(args);
                 using (var rc = new ReleaseContext())
                 {
+                    //rc.Configuration.LazyLoadingEnabled = false;
                     command.Apply(rc);                    
                 }
             }

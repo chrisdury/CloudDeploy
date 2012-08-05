@@ -9,7 +9,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CloudDeploy.Clients.ConsoleApp</RootNamespace>
-    <AssemblyName>CloudDeploy.Clients.ConsoleApp</AssemblyName>
+    <AssemblyName>ifwpcdt</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
