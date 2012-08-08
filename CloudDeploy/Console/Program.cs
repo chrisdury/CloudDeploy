@@ -25,7 +25,7 @@ namespace CloudDeploy.Clients.ConsoleApp
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-#if DEBUG
+#if DEBUG && RELEASE
                 Console.WriteLine(ex.StackTrace);
                 var ex1 = ex.InnerException;
                 while (ex1 != null)

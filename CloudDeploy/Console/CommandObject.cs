@@ -11,7 +11,7 @@ namespace CloudDeploy.Clients.ConsoleApp
     {
         [ArgsMemberSwitch(0)]
         public ActionEnum Action { get; set; }
-        public enum ActionEnum { List, Add, Update, Delete, AddArtefact };
+        public enum ActionEnum { List, Add, Update, Delete, AddArtefact, RemoveArtefact, Deploy };
 
         [ArgsMemberSwitch(1)]
         public NounEnum Noun { get; set; }
@@ -35,7 +35,7 @@ namespace CloudDeploy.Clients.ConsoleApp
                             break;
 
                         case ActionEnum.Add:
-                            if (arguments.Length != 3) throw new ArgumentException("Requires 3 arguments [HostName] [HostRole] [Environment]");
+                            CheckArguments(arguments, "HostName", "HostRole", "Environment");
                             rc.AddHost(arguments[0], arguments[1], arguments[2]);
                             Console.WriteLine("Host added");
                             break;
@@ -62,7 +62,7 @@ namespace CloudDeploy.Clients.ConsoleApp
                             break;
 
                         case ActionEnum.Add:
-                            if (arguments.Length != 3) throw new ArgumentException("Requires 3 arguments [BuildLabel] [BuildDate] [DropLocation]");
+                            CheckArguments(arguments, "BuildLabel", "BuildDate", "DropLocation");
                             rc.AddBuild(arguments[0], DateTime.Parse(arguments[1]), arguments[2]);
                             Console.WriteLine("Build added");
                             break;
@@ -72,7 +72,7 @@ namespace CloudDeploy.Clients.ConsoleApp
                             break;
 
                         case ActionEnum.Delete:
-                            if (arguments.Length != 1) throw new ArgumentException("Requires 1 arguments [BuildLabel]");
+                            CheckArguments(arguments, "BuildLabel");
                             rc.DeleteBuild(arguments[0]);
                             Console.WriteLine("Build deleted");
                             break;
@@ -89,7 +89,7 @@ namespace CloudDeploy.Clients.ConsoleApp
                             //rc.DeploymentUnits.Include("DeployableArtefact").Include("Build").ToList().ForEach(du => Console.WriteLine(du));
                             break;
                         case ActionEnum.Add:
-                            if (arguments.Length != 2) throw new ArgumentException("Requires 2 arguments [ArtefactName] [BuildLabel]");
+                            CheckArguments(arguments, "ArtefactName", "BuildLabel");
                             rc.AddDeploymentUnit(arguments[0], arguments[1]);
                             Console.WriteLine("Deployment Unit added");
                             break;
@@ -110,19 +110,27 @@ namespace CloudDeploy.Clients.ConsoleApp
                             rc.GetReleasePackages().ToList().ForEach(rp => Console.WriteLine(rp));
                             break;
                         case ActionEnum.Add:
-                            if (arguments.Length != 3) throw new ArgumentException("Requires 3 arguments [releaseName] [releaseDate] [environment]");
+                            CheckArguments(arguments, "ReleaseName", "ReleaseDate", "Environment");
                             var releasePackage = rc.AddReleasePackage(arguments[0], DateTime.Parse(arguments[1]), arguments[2]);
                             Console.WriteLine("Added Release Package: " + releasePackage);
                             break;
-                        case ActionEnum.Update:
-                            break;
-                        case ActionEnum.Delete:
-                            break;
 
                         case ActionEnum.AddArtefact:
-                            if (arguments.Length != 3) throw new ArgumentException("Requires 3 arguments [packageName] [artefactName] [buildLabel]");
+                            CheckArguments(arguments, "PackageName", "ArtefactName", "BuildLabel");
                             var deploymentUnit = rc.AddArtefactToPackage(arguments[0], arguments[1], arguments[2]);
                             Console.WriteLine("Added Deployment Unit:" + deploymentUnit.ToString());
+                            break;
+
+                        case ActionEnum.RemoveArtefact:
+                            CheckArguments(arguments, "packageName", "artefactName");
+                            rc.RemoveArtefactFromPackage(arguments[0], arguments[1]);
+                            Console.WriteLine("Artefact removed");
+                            break;
+
+                        case ActionEnum.Deploy:
+                            CheckArguments(arguments, "PackageName", "EnvironmentName");
+                            var releasingPackage = rc.DeployPackageToEnvironment(arguments[0], arguments[1]);
+                            Console.WriteLine(releasingPackage);
                             break;
                         default:
                             throw new Exception("Action not valid for this Noun");
@@ -137,7 +145,7 @@ namespace CloudDeploy.Clients.ConsoleApp
                             rc.GetDeployableArtefacts().ToList().ForEach(da => Console.WriteLine(da));
                             break;
                         case ActionEnum.Add:
-                            if (arguments.Length != 3) throw new ArgumentException("Requires 3 arguments [ArtefactName] [FileName] [HostRole]");
+                            CheckArguments(arguments, "ArtefactName", "FileName", "HostRole");
                             rc.AddArtefact(arguments[0], arguments[1], arguments[2]);
                             Console.WriteLine("Artefact added");
                             break;
@@ -145,7 +153,7 @@ namespace CloudDeploy.Clients.ConsoleApp
                             throw new NotImplementedException();
                             break;
                         case ActionEnum.Delete:
-                            if (arguments.Length != 1) throw new ArgumentException("Requires 1 arguments [ArtefactName]");
+                            CheckArguments(arguments, "ArtefactName");
                             rc.DeleteArtefact(arguments[0]);
                             Console.WriteLine("Artefact deleted");
                             break;
@@ -160,8 +168,14 @@ namespace CloudDeploy.Clients.ConsoleApp
 
 
 
-
-
+        private void CheckArguments(string[] args, params string[] expectedArgs)
+        {
+            if (args.Length != expectedArgs.Length)
+            {
+                var argsList = String.Join(" ",expectedArgs);
+                throw new ArgumentException("Expecting exactly " + expectedArgs.Length + " arguments: " + argsList);
+            }
+        }
 
     }
 }

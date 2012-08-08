@@ -9,8 +9,8 @@ namespace CloudDeploy.Model.Releases
     public class HostDeployment
     {
         public Guid HostDeploymentId { get; set; }
-        public Host Host { get; set; }
-        public DeploymentUnit DeploymentUnit { get; set; }
+        public virtual Host Host { get; set; }
+        public virtual DeploymentUnit DeploymentUnit { get; set; }
         public ReleaseStatus Status { get; set; }
 
         public HostDeployment() { Status = ReleaseStatus.Pending; }

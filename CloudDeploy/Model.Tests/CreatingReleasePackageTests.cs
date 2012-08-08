@@ -27,7 +27,7 @@ namespace CloudDeploy.Model.Tests
                 .ToList()
                 .ForEach(da =>
                 {
-                    rp_test.AddDeploymentUnit(new DeploymentUnit(Builds.First(), da));
+                    //rp_test.AddDeploymentUnit(new DeploymentUnit(Builds.First(), da));
                     //rp_staging.AddDeploymentUnit(new DeploymentUnit(Builds[2], da));
                 });
 

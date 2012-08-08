@@ -45,6 +45,11 @@ namespace CloudDeploy.Persistence.Contexts
             return Hosts;
         }
 
+        public IQueryable<Host> GetHostsInEnvironment(string environmentName)
+        {
+            return GetHosts().Where(h => h.Environment.Equals(environmentName, StringComparison.InvariantCultureIgnoreCase));
+        }
+
         public void UpdateHost(Host host)
         {
             try
@@ -233,7 +238,6 @@ namespace CloudDeploy.Persistence.Contexts
             }
         }
 
-
         public DeploymentUnit AddArtefactToPackage(string packageName, string artefactName, string buildLabel)
         {
             try
@@ -241,11 +245,8 @@ namespace CloudDeploy.Persistence.Contexts
                 var artefact = GetArtefactByName(artefactName);
                 var package = GetReleasePackageByName(packageName);
                 var build = GetBuildByLabel(buildLabel);
-                
-                if (package.DeploymentUnits.Any(du => du.DeployableArtefact == artefact && du.Build == build)) throw new ArgumentException(String.Format("The artefact:{0} build:{1} has already been added", artefactName, buildLabel));
-                
-                var deploymentUnit = new DeploymentUnit(build, artefact);
-                package.AddDeploymentUnit(deploymentUnit);
+
+                var deploymentUnit = package.AddArtefactToPackage(artefact, build);                
                 SaveChanges();
                 return deploymentUnit;
             }
@@ -255,6 +256,39 @@ namespace CloudDeploy.Persistence.Contexts
             }
         }
 
+        public void RemoveArtefactFromPackage(string packageName, string artefactName)
+        {
+            try
+            {
+                var package = GetReleasePackageByName(packageName);
+                var artefact = GetArtefactByName(artefactName);
+                package.RemoveArtefactFromPackage(artefact);
+                SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("There was a problem removing artefact:{0} from package:{1}. " + ex.Message, artefactName, packageName), ex);
+            }
+        }
+
+
+        public ReleasePackage DeployPackageToEnvironment(string packageName, string environmentName)
+        {
+            try
+            {
+                var package = GetReleasePackageByName(packageName);
+                var hosts = GetHostsInEnvironment(environmentName);
+                if (hosts.Count() == 0) throw new ArgumentException("environmentName", "there are no hosts configured for the environment: " + environmentName);
+                
+                package.DeployToHosts(hosts.ToList());
+                SaveChanges();
+                return package;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("Problem deploying package'{0}' to environment '{1}'. " + ex.Message, packageName, environmentName), ex);
+            }
+        }
 
 
         #endregion

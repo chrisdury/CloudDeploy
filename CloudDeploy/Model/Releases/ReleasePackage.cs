@@ -33,11 +33,21 @@ namespace CloudDeploy.Model.Releases
         }
 
 
-        public void AddDeploymentUnit(DeploymentUnit deploymentUnit)
+
+        public DeploymentUnit AddArtefactToPackage(DeployableArtefact artefact, Build build)
         {
-            if (deploymentUnit == null) throw new ArgumentNullException("deploymentUnit must not be null");
+            if (DeploymentUnits.Any(du => du.DeployableArtefact == artefact && du.Build == build)) throw new ArgumentException(String.Format("The artefact:{0} build:{1} has already been added", artefact.DeployableArtefactName, build.BuildLabel));
+
+            var deploymentUnit = new DeploymentUnit(build, artefact);
             DeploymentUnits.Add(deploymentUnit);
+            return deploymentUnit;
         }
+
+        public void RemoveArtefactFromPackage(DeployableArtefact artefact)
+        {
+            DeploymentUnits.RemoveAll(du => du.DeployableArtefact == artefact);
+        }
+
 
 
         public void DeployToHosts(List<Host> hosts)
@@ -45,6 +55,10 @@ namespace CloudDeploy.Model.Releases
             this.ReleaseStatus = Releases.ReleaseStatus.InProgress;
             foreach (var du in DeploymentUnits)
             {
+                if (hosts.Any(h => h.Environment != PlatformEnvironment))
+                {
+                    throw new ArgumentException("The Hosts you are intending to deploy to are not valid for this package");
+                }
                 foreach (var host in hosts.Where(h => h.Environment == PlatformEnvironment))
                 {
                     if (host.HostRole.Contains(du.DeployableArtefact.HostRole) || du.DeployableArtefact.HostRole == "ALL")
@@ -61,7 +75,7 @@ namespace CloudDeploy.Model.Releases
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendLine(String.Format("Release Package: {0} {1} {2}", this.ReleasePackageID, this.ReleaseName, this.ReleaseDate));
+            sb.AppendLine(String.Format("Release Package: {0} {1}", this.ReleaseName, this.ReleaseDate/*, this.ReleasePackageID*/));
 
             if (DeploymentUnits != null && DeploymentUnits.Count() > 0)
             {
@@ -76,7 +90,7 @@ namespace CloudDeploy.Model.Releases
                             "",
                             "",
                             "",
-                            deploymentUnit.Status
+                            Enum.GetName(typeof(ReleaseStatus),deploymentUnit.Status)
                             )
                         );
                     foreach (var hostDeployment in deploymentUnit.HostDeployments)

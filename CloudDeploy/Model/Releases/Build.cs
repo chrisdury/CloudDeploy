@@ -12,7 +12,7 @@ namespace CloudDeploy.Model.Releases
         public Guid BuildID { get; set; }
         public string BuildName { get; set; }
         public DateTime BuildDate { get; set; }
-        public IEnumerable<DeploymentUnit> DeploymentUnits { get; set; }
+        public virtual IEnumerable<DeploymentUnit> DeploymentUnits { get; set; }
 
 
         public override string ToString()

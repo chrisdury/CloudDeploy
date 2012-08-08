@@ -13,7 +13,7 @@ namespace CloudDeploy.Model.Releases
         public virtual Build Build { get; set; }
         public virtual DeployableArtefact DeployableArtefact { get; set; }
         public virtual List<HostDeployment> HostDeployments { get; set; }
-        public ReleaseStatus Status { get; set; }
+        public virtual ReleaseStatus Status { get; set; }
 
         public DeploymentUnit() { }
 
@@ -34,7 +34,7 @@ namespace CloudDeploy.Model.Releases
         {
             if (host == null) throw new ArgumentNullException("host", "host must not be null");
             Trace.WriteLine("Adding new Host to " + ToString());
-            HostDeployments.Add(new HostDeployment() { DeploymentUnit = this, Host = host });
+            HostDeployments.Add(new HostDeployment() { HostDeploymentId = Guid.NewGuid(), DeploymentUnit = this, Host = host });
             Status = ReleaseStatus.InProgress;
         }
 

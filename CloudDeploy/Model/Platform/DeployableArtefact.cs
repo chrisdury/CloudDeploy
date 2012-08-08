@@ -16,7 +16,7 @@ namespace CloudDeploy.Model.Platform
 
         public override string ToString()
         {
-            return String.Format("ID: {0} Name: {1} Filename: {2}", DeployableArtefactID, DeployableArtefactName, FileName);
+            return String.Format("ID: {0} Name: {1} Filename: {2} Host: {3}", DeployableArtefactID, DeployableArtefactName, FileName, HostRole);
         }
 
     }
