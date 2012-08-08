@@ -9,10 +9,10 @@ namespace CloudDeploy.Model.Releases
 {
     public class DeploymentUnit
     {
-        public Guid DeploymentUnitID { get; set; }
-        public Build Build { get; set; }
-        public DeployableArtefact DeployableArtefact { get; set; }
-        public List<HostDeployment> HostDeployments { get; set; }
+        public virtual Guid DeploymentUnitID { get; set; }
+        public virtual Build Build { get; set; }
+        public virtual DeployableArtefact DeployableArtefact { get; set; }
+        public virtual List<HostDeployment> HostDeployments { get; set; }
         public ReleaseStatus Status { get; set; }
 
         public DeploymentUnit() { }

@@ -17,6 +17,8 @@ namespace CloudDeploy.Persistence.Contexts
         public DbSet<Host> Hosts { get; set; }
         public ReleaseContext() : base("name=CloudDeploy.Model") { }
 
+        #region Hosts
+
         public void AddHost(string hostName, string hostRole, string environment)
         {
             try
@@ -36,6 +38,11 @@ namespace CloudDeploy.Persistence.Contexts
             {
                 throw new ApplicationException(String.Format("Problem adding Host '{0}'. " + ex.Message, hostName), ex);
             }
+        }
+
+        public IQueryable<Host> GetHosts()
+        {
+            return Hosts;
         }
 
         public void UpdateHost(Host host)
@@ -67,6 +74,9 @@ namespace CloudDeploy.Persistence.Contexts
             }
         }
 
+        #endregion
+
+        #region Builds
 
         public void AddBuild(string buildLabel, DateTime buildDate, string dropLocation)
         {
@@ -104,6 +114,22 @@ namespace CloudDeploy.Persistence.Contexts
             }
         }
 
+        public IQueryable<Build> GetBuilds()
+        {
+            return Builds;//.Include("DeploymentUnits");
+        }
+
+        public Build GetBuildByLabel(string label)
+        {
+            var build = GetBuilds().SingleOrDefault(b => b.BuildLabel.Equals(label, StringComparison.InvariantCultureIgnoreCase));
+            if (build == null) throw new ArgumentOutOfRangeException("name", "Could not find build with label:" + label);
+            return build;
+        }
+
+
+        #endregion
+
+        #region Artefacts
 
         public void AddArtefact(string artefactName, string fileName, string hostRole)
         {
@@ -140,6 +166,19 @@ namespace CloudDeploy.Persistence.Contexts
             }
         }
 
+        public IQueryable<DeployableArtefact> GetDeployableArtefacts()
+        {
+            return DeployableArtefacts;
+        }
+
+        public DeployableArtefact GetArtefactByName(string name)
+        {
+            var artefact = GetDeployableArtefacts().SingleOrDefault(a => a.DeployableArtefactName.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+            if (artefact == null) throw new ArgumentOutOfRangeException("artefact", "Could not find an artefact with name:" + name);
+            return artefact;
+        }
+
+        #endregion
 
         public void AddDeploymentUnit(string artefactName, string buildLabel)
         {
@@ -152,7 +191,10 @@ namespace CloudDeploy.Persistence.Contexts
                 if (build == null) throw new ArgumentException("Could not find build with label " + build);
 
                 var deploymentUnit = new DeploymentUnit(build, artefact);
-                DeploymentUnits.Add(deploymentUnit);
+                //DeploymentUnits.Add(deploymentUnit);
+
+
+
                 SaveChanges();
             }
             catch (Exception ex)
@@ -162,6 +204,59 @@ namespace CloudDeploy.Persistence.Contexts
         }
 
 
+        #region Release Package
 
+        public IQueryable<ReleasePackage> GetReleasePackages()
+        {
+            return ReleasePackages.Include("DeploymentUnits");//.Include("DeployableArtefacts");
+        }
+
+        public ReleasePackage GetReleasePackageByName(string name)
+        {
+            var releasePackage = GetReleasePackages().SingleOrDefault(rp => rp.ReleaseName.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+            if (releasePackage == null) throw new ArgumentOutOfRangeException("Could not find Release Package with name:" + name);
+            return releasePackage;
+        }
+
+        public ReleasePackage AddReleasePackage(string releaseName, DateTime releaseDate, string environment)
+        {
+            try
+            {
+                var rp = new ReleasePackage(releaseName, releaseDate, environment);
+                ReleasePackages.Add(rp);
+                SaveChanges();
+                return rp;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Could not add Release Package", ex);
+            }
+        }
+
+
+        public DeploymentUnit AddArtefactToPackage(string packageName, string artefactName, string buildLabel)
+        {
+            try
+            {
+                var artefact = GetArtefactByName(artefactName);
+                var package = GetReleasePackageByName(packageName);
+                var build = GetBuildByLabel(buildLabel);
+                
+                if (package.DeploymentUnits.Any(du => du.DeployableArtefact == artefact && du.Build == build)) throw new ArgumentException(String.Format("The artefact:{0} build:{1} has already been added", artefactName, buildLabel));
+                
+                var deploymentUnit = new DeploymentUnit(build, artefact);
+                package.AddDeploymentUnit(deploymentUnit);
+                SaveChanges();
+                return deploymentUnit;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(String.Format("Problem adding artefact '{0}' to package '{1}'", artefactName, packageName), ex);
+            }
+        }
+
+
+
+        #endregion
     }
 }

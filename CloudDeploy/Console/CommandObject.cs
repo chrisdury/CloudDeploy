@@ -11,7 +11,7 @@ namespace CloudDeploy.Clients.ConsoleApp
     {
         [ArgsMemberSwitch(0)]
         public ActionEnum Action { get; set; }
-        public enum ActionEnum { List, Add, Update, Delete };
+        public enum ActionEnum { List, Add, Update, Delete, AddArtefact };
 
         [ArgsMemberSwitch(1)]
         public NounEnum Noun { get; set; }
@@ -30,7 +30,8 @@ namespace CloudDeploy.Clients.ConsoleApp
                     switch (Action)
                     {
                         case ActionEnum.List:
-                            rc.Hosts.ToList().ForEach(h => Console.WriteLine(h.ToString()));
+                            //rc.Hosts.ToList().ForEach(h => Console.WriteLine(h.ToString()));
+                            rc.GetHosts().ToList().ForEach(h => Console.WriteLine(h));
                             break;
 
                         case ActionEnum.Add:
@@ -47,6 +48,8 @@ namespace CloudDeploy.Clients.ConsoleApp
                             rc.DeleteHost(arguments[0]);
                             Console.WriteLine("Host deleted");
                             break;
+                        default:
+                            throw new Exception("Action not valid for this Noun");
                     }
                     break;
 
@@ -55,7 +58,7 @@ namespace CloudDeploy.Clients.ConsoleApp
                     switch (Action)
                     {
                         case ActionEnum.List:
-                            rc.Builds.ToList().ForEach(b => Console.WriteLine(b.ToString()));
+                            rc.GetBuilds().ToList().ForEach(b => Console.WriteLine(b.ToString()));
                             break;
 
                         case ActionEnum.Add:
@@ -73,6 +76,8 @@ namespace CloudDeploy.Clients.ConsoleApp
                             rc.DeleteBuild(arguments[0]);
                             Console.WriteLine("Build deleted");
                             break;
+                        default:
+                            throw new Exception("Action not valid for this Noun");
                     }
                     break;
 
@@ -81,7 +86,7 @@ namespace CloudDeploy.Clients.ConsoleApp
                     switch (Action)
                     {
                         case ActionEnum.List:
-                            rc.DeploymentUnits.Include("DeployableArtefact").Include("Build").ToList().ForEach(du => Console.WriteLine(du));
+                            //rc.DeploymentUnits.Include("DeployableArtefact").Include("Build").ToList().ForEach(du => Console.WriteLine(du));
                             break;
                         case ActionEnum.Add:
                             if (arguments.Length != 2) throw new ArgumentException("Requires 2 arguments [ArtefactName] [BuildLabel]");
@@ -92,6 +97,8 @@ namespace CloudDeploy.Clients.ConsoleApp
                             break;                        
                         case ActionEnum.Delete:
                             break;
+                        default:
+                            throw new Exception("Action not valid for this Noun");
                     }
                     break;
 
@@ -100,13 +107,25 @@ namespace CloudDeploy.Clients.ConsoleApp
                     switch (Action)
                     {
                         case ActionEnum.List:
+                            rc.GetReleasePackages().ToList().ForEach(rp => Console.WriteLine(rp));
                             break;
                         case ActionEnum.Add:
+                            if (arguments.Length != 3) throw new ArgumentException("Requires 3 arguments [releaseName] [releaseDate] [environment]");
+                            var releasePackage = rc.AddReleasePackage(arguments[0], DateTime.Parse(arguments[1]), arguments[2]);
+                            Console.WriteLine("Added Release Package: " + releasePackage);
                             break;
                         case ActionEnum.Update:
                             break;
                         case ActionEnum.Delete:
                             break;
+
+                        case ActionEnum.AddArtefact:
+                            if (arguments.Length != 3) throw new ArgumentException("Requires 3 arguments [packageName] [artefactName] [buildLabel]");
+                            var deploymentUnit = rc.AddArtefactToPackage(arguments[0], arguments[1], arguments[2]);
+                            Console.WriteLine("Added Deployment Unit:" + deploymentUnit.ToString());
+                            break;
+                        default:
+                            throw new Exception("Action not valid for this Noun");
                     }
                     break;
 
@@ -115,7 +134,7 @@ namespace CloudDeploy.Clients.ConsoleApp
                     switch (Action)
                     {
                         case ActionEnum.List:
-                            rc.DeployableArtefacts.ToList().ForEach(da => Console.WriteLine(da));
+                            rc.GetDeployableArtefacts().ToList().ForEach(da => Console.WriteLine(da));
                             break;
                         case ActionEnum.Add:
                             if (arguments.Length != 3) throw new ArgumentException("Requires 3 arguments [ArtefactName] [FileName] [HostRole]");
@@ -130,6 +149,8 @@ namespace CloudDeploy.Clients.ConsoleApp
                             rc.DeleteArtefact(arguments[0]);
                             Console.WriteLine("Artefact deleted");
                             break;
+                        default:
+                            throw new Exception("Action not valid for this Noun");
                     }
                     break;
 

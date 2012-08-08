@@ -17,13 +17,24 @@ namespace CloudDeploy.Clients.ConsoleApp
                 var command = Args.Configuration.Configure<CommandObject>().CreateAndBind(args);
                 using (var rc = new ReleaseContext())
                 {
-                    //rc.Configuration.LazyLoadingEnabled = false;
+                    rc.Configuration.LazyLoadingEnabled = true;
+                    rc.Configuration.ProxyCreationEnabled = true;
                     command.Apply(rc);                    
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+#if DEBUG
+                Console.WriteLine(ex.StackTrace);
+                var ex1 = ex.InnerException;
+                while (ex1 != null)
+                {
+                    Console.WriteLine(ex1.Message);
+                    Console.WriteLine(ex1.StackTrace);
+                    ex1 = ex1.InnerException;
+                }
+#endif            
             }
         }
     }
