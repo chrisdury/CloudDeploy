@@ -9,11 +9,16 @@ namespace CloudDeploy.Model.Releases
 {
     public class DeploymentUnit
     {
-        public virtual Guid DeploymentUnitID { get; set; }
+        public Guid DeploymentUnitID { get; set; }
         public virtual Build Build { get; set; }
         public virtual DeployableArtefact DeployableArtefact { get; set; }
         public virtual List<HostDeployment> HostDeployments { get; set; }
-        public virtual ReleaseStatus Status { get; set; }
+        public ReleaseStatus ReleaseStatus { get; set; }
+        public int Status_Id
+        {
+            get { return (int)ReleaseStatus; }
+            set { ReleaseStatus = (ReleaseStatus)value; }
+        }
 
         public DeploymentUnit() { }
 
@@ -24,7 +29,7 @@ namespace CloudDeploy.Model.Releases
             Build = build;
             DeployableArtefact = deployableArtefact;
             HostDeployments = new List<HostDeployment>();
-            Status = ReleaseStatus.Pending;
+            ReleaseStatus = ReleaseStatus.Pending;
             DeploymentUnitID = Guid.NewGuid();
             Trace.WriteLine("Created new " + this.ToString());
         }
@@ -35,13 +40,13 @@ namespace CloudDeploy.Model.Releases
             if (host == null) throw new ArgumentNullException("host", "host must not be null");
             Trace.WriteLine("Adding new Host to " + ToString());
             HostDeployments.Add(new HostDeployment() { HostDeploymentId = Guid.NewGuid(), DeploymentUnit = this, Host = host });
-            Status = ReleaseStatus.InProgress;
+            ReleaseStatus = ReleaseStatus.InProgress;
         }
 
 
         public override string ToString()
         {
-            return String.Format("DeploymentUnit: id:{0} status:{1} artefact:{2} build:{3}", DeploymentUnitID, Status, DeployableArtefact.DeployableArtefactName, Build.BuildLabel);
+            return String.Format("DeploymentUnit: id:{0} status:{1} artefact:{2} build:{3}", DeploymentUnitID, ReleaseStatus, DeployableArtefact.DeployableArtefactName, Build.BuildLabel);
         }
 
 

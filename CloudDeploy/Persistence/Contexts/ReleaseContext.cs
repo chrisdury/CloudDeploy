@@ -185,29 +185,7 @@ namespace CloudDeploy.Persistence.Contexts
 
         #endregion
 
-        public void AddDeploymentUnit(string artefactName, string buildLabel)
-        {
-            try
-            {
-                var artefact = DeployableArtefacts.SingleOrDefault(da => da.DeployableArtefactName == artefactName);
-                if (artefact == null) throw new ArgumentException("Could not find artefact with name " + artefactName);
-
-                var build = Builds.SingleOrDefault(b => b.BuildLabel == buildLabel);
-                if (build == null) throw new ArgumentException("Could not find build with label " + build);
-
-                var deploymentUnit = new DeploymentUnit(build, artefact);
-                //DeploymentUnits.Add(deploymentUnit);
-
-
-
-                SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException("Could not add deployment unit. " + ex.Message, ex);
-            }
-        }
-
+        
 
         #region Release Package
 

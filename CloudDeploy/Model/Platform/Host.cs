@@ -26,5 +26,9 @@ namespace CloudDeploy.Model.Platform
             return String.Format("ID: {0} HostName: {1} Role: {2} Environment: {3}", HostID, HostName, HostRole, Environment);
         }
 
+
+
+
+
     }
 }

@@ -14,6 +14,11 @@ namespace CloudDeploy.Model.Releases
         public DateTime ReleaseDate { get; set; }
         public string PlatformEnvironment { get; set; }
         public ReleaseStatus ReleaseStatus { get; set; }
+        public int Status_Id 
+        {
+            get { return (int)ReleaseStatus; }
+            set { ReleaseStatus = (ReleaseStatus)value; }
+        }
         public virtual List<DeploymentUnit> DeploymentUnits { get; set; }
 
         public event DeployHander OnDeploymentUnitDeploying = delegate { };
@@ -71,16 +76,21 @@ namespace CloudDeploy.Model.Releases
             }
         }
 
+        public void 
+
+
+
+
 
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendLine(String.Format("Release Package: {0} {1}", this.ReleaseName, this.ReleaseDate/*, this.ReleasePackageID*/));
+            sb.AppendLine(String.Format("Release Package: {0} on: {1} status: {2}", this.ReleaseName, this.ReleaseDate, this.ReleaseStatus));
 
             if (DeploymentUnits != null && DeploymentUnits.Count() > 0)
             {
                 var rowtemplate = "|{0,-50}|{1,-10}|{2,-15}|{3,-15}|{4,-25}|{5,-10}|";
-                sb.AppendLine(String.Format(rowtemplate, "Artefact", "Build", "Env", "HostName", "Role", "Status"));
+                sb.AppendLine(String.Format(rowtemplate, "Artefact", "Build", "Environment", "HostName", "Role", "Status"));
 
                 foreach (var deploymentUnit in DeploymentUnits)
                 {
@@ -90,7 +100,7 @@ namespace CloudDeploy.Model.Releases
                             "",
                             "",
                             "",
-                            Enum.GetName(typeof(ReleaseStatus),deploymentUnit.Status)
+                            deploymentUnit.ReleaseStatus
                             )
                         );
                     foreach (var hostDeployment in deploymentUnit.HostDeployments)
@@ -101,7 +111,7 @@ namespace CloudDeploy.Model.Releases
                             hostDeployment.Host.Environment,
                             hostDeployment.Host.HostName,
                             hostDeployment.Host.HostRole,
-                            hostDeployment.Status
+                            hostDeployment.ReleaseStatus
                             )
                         );
                     }
