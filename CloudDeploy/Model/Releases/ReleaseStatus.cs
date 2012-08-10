@@ -7,7 +7,8 @@ namespace CloudDeploy.Model.Releases
 {
     public enum ReleaseStatus
     {
-        Pending = 1,
+        Queued = 1,
+        Pending,
         InProgress,
         Complete,
         Failed,

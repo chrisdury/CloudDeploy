@@ -44,6 +44,30 @@ namespace CloudDeploy.Model.Releases
         }
 
 
+        public void Install()
+        {
+            if (ReleaseStatus != Releases.ReleaseStatus.Pending) throw new InvalidOperationException("ReleaseStatus must be pending in order to install");
+            ReleaseStatus = Releases.ReleaseStatus.InProgress;
+        }
+
+        public void Confirm()
+        {
+            if (ReleaseStatus != Releases.ReleaseStatus.InProgress) throw new InvalidOperationException("ReleaseStatus must be InProgress to confirm install");
+            ReleaseStatus = Releases.ReleaseStatus.Complete;
+        }
+
+        public void RollBack()
+        {
+            if (ReleaseStatus != Releases.ReleaseStatus.InProgress) throw new InvalidOperationException("Release Status must be InProgress in order to rollback");
+            ReleaseStatus = Releases.ReleaseStatus.Rollingback;
+        }
+
+        public void Fail()
+        {
+            if (ReleaseStatus != Releases.ReleaseStatus.Rollingback) throw new InvalidOperationException("ReleaseStatus must be Rollback to fail");
+            ReleaseStatus = Releases.ReleaseStatus.Failed;
+        }
+
         public override string ToString()
         {
             return String.Format("DeploymentUnit: id:{0} status:{1} artefact:{2} build:{3}", DeploymentUnitID, ReleaseStatus, DeployableArtefact.DeployableArtefactName, Build.BuildLabel);

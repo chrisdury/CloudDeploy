@@ -60,7 +60,7 @@ namespace CloudDeploy.Model.Releases
             this.ReleaseStatus = Releases.ReleaseStatus.InProgress;
             foreach (var du in DeploymentUnits)
             {
-                if (hosts.Any(h => h.Environment != PlatformEnvironment))
+                if (!hosts.Any(h => h.Environment.Equals(PlatformEnvironment, StringComparison.InvariantCultureIgnoreCase)))
                 {
                     throw new ArgumentException("The Hosts you are intending to deploy to are not valid for this package");
                 }
@@ -75,9 +75,6 @@ namespace CloudDeploy.Model.Releases
                 }
             }
         }
-
-        public void 
-
 
 
 

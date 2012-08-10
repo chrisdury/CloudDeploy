@@ -18,6 +18,6 @@ namespace CloudDeploy.Model.Releases
             set { ReleaseStatus = (ReleaseStatus)value; }
         }
 
-        public HostDeployment() { ReleaseStatus = ReleaseStatus.Pending; }
+        public HostDeployment() { ReleaseStatus = ReleaseStatus.Queued; }
     }
 }

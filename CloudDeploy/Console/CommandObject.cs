@@ -37,7 +37,7 @@ namespace CloudDeploy.Clients.ConsoleApp
 
                 case NounEnum.Build:
                 case NounEnum.Builds:
-                    HostAction(rc);
+                    BuildAction(rc);
                     break;
 
                 case NounEnum.DeploymentUnit:
