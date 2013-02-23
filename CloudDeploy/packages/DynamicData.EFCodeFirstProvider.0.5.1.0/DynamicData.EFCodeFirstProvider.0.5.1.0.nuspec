@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>DynamicData.EFCodeFirstProvider</id>
+    <version>0.5.1.0</version>
+    <authors>David Ebbo</authors>
+    <owners>David Ebbo</owners>
+    <licenseUrl>http://www.opensource.org/licenses/ms-pl</licenseUrl>
+    <projectUrl>https://github.com/davidebbo/DynamicData.EFCodeFirstProvider</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Supports using Dynamic Data with EF Code First models</description>
+    <dependencies>
+      <dependency id="EntityFramework" version="4.3.1" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Web.DynamicData" targetFramework="" />
+    </frameworkAssemblies>
+    <references>
+      <reference file="DynamicData.EFCodeFirstProvider.dll" />
+    </references>
+  </metadata>
+</package>
