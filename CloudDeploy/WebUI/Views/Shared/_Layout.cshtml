@@ -8,8 +8,28 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    @RenderBody()
+    <header>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p class="site-title">
+                    <a href="~/">Deploy Tool</a>
+                </p>
+            </div>
+        </div>
+    </header>
+    <menu>
+        <ol>
+            <li><a href="~/">Home</a></li>
+            <li>Deploy</li>
+            <li>Builds</li>
+            <li>Artefacts</li>
+        </ol>
+    </menu>
+    <div id="body">
 
+        @RenderBody()
+       
+    </div>
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
 </body>
