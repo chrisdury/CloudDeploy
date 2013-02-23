@@ -1,0 +1,36 @@
+﻿@model CloudDeploy.Model.Platform.Host
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Host</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Environment)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Environment)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.HostName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HostName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.HostRole)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HostRole)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.HostID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

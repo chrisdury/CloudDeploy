@@ -1,0 +1,57 @@
+﻿@model IEnumerable<CloudDeploy.Model.Platform.DeployableArtefact>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DeployableArtefactName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FileName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InstallationScript)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RollbackScript)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HostRole)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DeployableArtefactName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FileName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InstallationScript)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RollbackScript)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HostRole)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.DeployableArtefactID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.DeployableArtefactID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.DeployableArtefactID })
+        </td>
+    </tr>
+}
+
+</table>

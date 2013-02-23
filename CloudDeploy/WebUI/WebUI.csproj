@@ -122,7 +122,12 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ArtefactsController.cs" />
+    <Compile Include="Controllers\BuildController.cs" />
+    <Compile Include="Controllers\DeployController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HostsController.cs" />
+    <Compile Include="Controllers\ReleaseController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -227,6 +232,31 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Build\Index.cshtml" />
+    <Content Include="Views\Build\Details.cshtml" />
+    <Content Include="Views\Build\Create.cshtml" />
+    <Content Include="Views\Build\Edit.cshtml" />
+    <Content Include="Views\Build\Delete.cshtml" />
+    <Content Include="Views\Artefacts\Index.cshtml" />
+    <Content Include="Views\Artefacts\Details.cshtml" />
+    <Content Include="Views\Artefacts\Create.cshtml" />
+    <Content Include="Views\Artefacts\Edit.cshtml" />
+    <Content Include="Views\Artefacts\Delete.cshtml" />
+    <Content Include="Views\Hosts\Index.cshtml" />
+    <Content Include="Views\Hosts\Details.cshtml" />
+    <Content Include="Views\Hosts\Create.cshtml" />
+    <Content Include="Views\Hosts\Edit.cshtml" />
+    <Content Include="Views\Hosts\Delete.cshtml" />
+    <Content Include="Views\Deploy\Index.cshtml" />
+    <Content Include="Views\Deploy\CreateDeployment.cshtml" />
+    <Content Include="Views\Deploy\EditRelease.cshtml" />
+    <Content Include="Views\Release\Index.cshtml" />
+    <Content Include="Views\Release\Details.cshtml" />
+    <Content Include="Views\Release\Create.cshtml" />
+    <Content Include="Views\Release\Edit.cshtml" />
+    <Content Include="Views\Release\Delete.cshtml" />
+    <Content Include="Views\Release\ManageDeploymentUnits.cshtml" />
+    <Content Include="Views\Release\AddDeploymentUnit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

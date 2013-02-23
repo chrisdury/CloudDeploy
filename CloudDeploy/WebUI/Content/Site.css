@@ -11,3 +11,15 @@ body {
     margin: 0;
     padding: 0;
 }
+
+.deploytool menu {
+    margin:0;
+}
+.deploytool menu ol {
+    margin: 0;
+}
+.deploytool menu ol li {
+    list-style-type: none;
+    display:inline;
+    padding:0;
+}

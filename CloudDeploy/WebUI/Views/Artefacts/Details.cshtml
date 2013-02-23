@@ -1,0 +1,50 @@
+﻿@model CloudDeploy.Model.Platform.DeployableArtefact
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>DeployableArtefact</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.DeployableArtefactName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DeployableArtefactName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.FileName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FileName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.InstallationScript)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.InstallationScript)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RollbackScript)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RollbackScript)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.HostRole)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HostRole)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.DeployableArtefactID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

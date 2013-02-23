@@ -39,6 +39,8 @@ namespace CloudDeploy.Model.Releases
 
 
 
+
+
         public DeploymentUnit AddArtefactToPackage(DeployableArtefact artefact, Build build)
         {
             if (DeploymentUnits.Any(du => du.DeployableArtefact == artefact && du.Build == build)) throw new ArgumentException(String.Format("The artefact:{0} build:{1} has already been added", artefact.DeployableArtefactName, build.BuildLabel));
@@ -120,5 +122,7 @@ namespace CloudDeploy.Model.Releases
             }
             return sb.ToString();
         }
+
+       
     }
 }

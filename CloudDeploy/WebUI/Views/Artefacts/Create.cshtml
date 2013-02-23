@@ -1,0 +1,67 @@
+﻿@model CloudDeploy.Model.Platform.DeployableArtefact
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>DeployableArtefact</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DeployableArtefactName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.DeployableArtefactName)
+            @Html.ValidationMessageFor(model => model.DeployableArtefactName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FileName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FileName)
+            @Html.ValidationMessageFor(model => model.FileName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.InstallationScript)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.InstallationScript)
+            @Html.ValidationMessageFor(model => model.InstallationScript)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RollbackScript)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RollbackScript)
+            @Html.ValidationMessageFor(model => model.RollbackScript)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.HostRole)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.HostRole)
+            @Html.ValidationMessageFor(model => model.HostRole)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
