@@ -1,0 +1,18 @@
+﻿@model CloudDeploy.Model.Releases.ReleasePackage
+@{
+    ViewBag.Title = "Deploy Release Package";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) {
+        
+    
+    <p>
+        Deploy Package: <strong>@Model.ReleaseName</strong> to Environment: @Html.DropDownList("Environments")        
+    </p>
+    <p>
+        <input type="submit" value="Deploy!" />
+    </p>
+
+}

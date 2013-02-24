@@ -1,0 +1,29 @@
+﻿@model CloudDeploy.Model.Releases.ReleasePackage
+@{
+    ViewBag.Title = "Status Of Release Package";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<ul>
+@foreach (var deploymentunit in Model.DeploymentUnits)
+{
+    <li>
+        @deploymentunit.DeployableArtefact.DeployableArtefactName
+        (@deploymentunit.Build.BuildLabel)
+        (@deploymentunit.ReleaseStatus)
+        <ul>
+            @foreach (var hostdeployment in deploymentunit.HostDeployments)
+            {
+                <li>
+                    @hostdeployment.Host.HostName (@hostdeployment.Host.HostRole)
+                    - @hostdeployment.ReleaseStatus
+                </li>
+            }
+        </ul>
+
+    </li>
+
+
+}
+</ul>

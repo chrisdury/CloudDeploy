@@ -68,7 +68,6 @@ namespace WebUI.Controllers
             package.RemoveArtefactFromPackage(deploymentUnit.DeployableArtefact);
             db.SaveChanges();
             return RedirectToAction("ManageDeploymentUnits", new { id = id });
-            //return View();
         }
 
 

@@ -17,43 +17,38 @@ namespace WebUI.Controllers
 
         public ActionResult Index()
         {
+            ViewData.Add("Releases", db.GetReleasePackages());
+
             return View();
         }
 
 
-        public ActionResult CreateRelease()
+        public ActionResult DeployReleasePackage(Guid id)
         {
-            return View();
+            var releasePackage = db.GetReleasePackages().Single(rp => rp.ReleasePackageID == id);
+            ViewData.Add("Environments", new List<SelectListItem>(new SelectListItem[] { new SelectListItem() { Text = "TEST" }, new SelectListItem() { Text = "STAGING" } }));
+
+            return View(releasePackage);
         }
 
         [HttpPost]
-        public ActionResult CreateRelease(ReleasePackage releasePackage)
+        public ActionResult DeployReleasePackage(Guid id, FormCollection fc)
         {
-            if (ModelState.IsValid)
+            var releasePackage = db.GetReleasePackages().Single(rp => rp.ReleasePackageID == id);
+            if (fc["Environments"] != null)
             {
-                if (releasePackage.ReleasePackageID == Guid.Empty)
-                    releasePackage.ReleasePackageID = Guid.NewGuid();
-                releasePackage.PlatformEnvironment = "TEST";
-                releasePackage.ReleaseDate = DateTime.Now;
-                releasePackage.ReleaseStatus = ReleaseStatus.Queued;
-                db.ReleasePackages.Add(releasePackage);                
+                db.DeployPackageToEnvironment(releasePackage.ReleaseName, fc["Environments"]);
                 db.SaveChanges();
-                return RedirectToAction("EditRelease");
-
+                return RedirectToAction("Index");
             }
             return View(releasePackage);
         }
 
-
-
-        public ActionResult EditRelease()
+        public ActionResult StatusOfReleasePackage(Guid id)
         {
-            return View();
+            var releasePackage = db.GetReleasePackages().Single(rp => rp.ReleasePackageID == id);
+            return View(releasePackage);
         }
-
-       
-
-
 
 
     }

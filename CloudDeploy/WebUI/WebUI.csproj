@@ -248,8 +248,6 @@
     <Content Include="Views\Hosts\Edit.cshtml" />
     <Content Include="Views\Hosts\Delete.cshtml" />
     <Content Include="Views\Deploy\Index.cshtml" />
-    <Content Include="Views\Deploy\CreateDeployment.cshtml" />
-    <Content Include="Views\Deploy\EditRelease.cshtml" />
     <Content Include="Views\Release\Index.cshtml" />
     <Content Include="Views\Release\Details.cshtml" />
     <Content Include="Views\Release\Create.cshtml" />
@@ -258,6 +256,8 @@
     <Content Include="Views\Release\ManageDeploymentUnits.cshtml" />
     <Content Include="Views\Release\AddDeploymentUnit.cshtml" />
     <Content Include="Views\Release\RemoveDeploymentUnit.cshtml" />
+    <Content Include="Views\Deploy\DeployReleasePackage.cshtml" />
+    <Content Include="Views\Deploy\StatusOfReleasePackage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
