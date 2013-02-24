@@ -257,6 +257,7 @@
     <Content Include="Views\Release\Delete.cshtml" />
     <Content Include="Views\Release\ManageDeploymentUnits.cshtml" />
     <Content Include="Views\Release\AddDeploymentUnit.cshtml" />
+    <Content Include="Views\Release\RemoveDeploymentUnit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
