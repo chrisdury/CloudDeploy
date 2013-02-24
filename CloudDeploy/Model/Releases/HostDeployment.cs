@@ -19,5 +19,38 @@ namespace CloudDeploy.Model.Releases
         }
 
         public HostDeployment() { ReleaseStatus = ReleaseStatus.Queued; }
+
+        public void Accept()
+        {
+            if (ReleaseStatus != Releases.ReleaseStatus.Queued) throw new InvalidOperationException("ReleaseStatus must be queued in order to accept");
+            ReleaseStatus = Releases.ReleaseStatus.Pending;
+        }
+
+        public void Install()
+        {
+            if (ReleaseStatus != Releases.ReleaseStatus.Pending) throw new InvalidOperationException("ReleaseStatus must be pending in order to install");
+            ReleaseStatus = Releases.ReleaseStatus.InProgress;
+        }
+
+        public void Confirm()
+        {
+            if (ReleaseStatus != Releases.ReleaseStatus.InProgress) throw new InvalidOperationException("ReleaseStatus must be InProgress to confirm install");
+            ReleaseStatus = Releases.ReleaseStatus.Complete;
+        }
+
+        public void RollBack()
+        {
+            if (ReleaseStatus != Releases.ReleaseStatus.InProgress) throw new InvalidOperationException("Release Status must be InProgress in order to rollback");
+            ReleaseStatus = Releases.ReleaseStatus.Rollingback;
+        }
+
+        public void Fail()
+        {
+            if (ReleaseStatus != Releases.ReleaseStatus.Rollingback) throw new InvalidOperationException("ReleaseStatus must be Rollback to fail");
+            ReleaseStatus = Releases.ReleaseStatus.Failed;
+        }
+
+
+
     }
 }

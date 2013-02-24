@@ -14,6 +14,7 @@ namespace CloudDeploy.Persistence.Contexts
         public DbSet<ReleasePackage> ReleasePackages { get; set; }
         public DbSet<DeploymentUnit> DeploymentUnits { get; set; }
         public DbSet<DeployableArtefact> DeployableArtefacts { get; set; }
+        public DbSet<HostDeployment> HostDeployments { get; set; }
         public DbSet<Host> Hosts { get; set; }
         public ReleaseContext() : base("name=CloudDeploy.Model") { }
 

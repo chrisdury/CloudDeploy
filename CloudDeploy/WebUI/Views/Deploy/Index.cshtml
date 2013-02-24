@@ -17,4 +17,20 @@
 
 <h2>Current Catalog</h2>
 
+<table>
+    <tr>
+        <th>Artefact</th>
+        <th>Host</th>
+        <th>Build</th>
+    </tr>
 
+
+@foreach (var hostdeploy in ViewData["HostDeployments"] as IQueryable<CloudDeploy.Model.Releases.HostDeployment>)
+{
+    <tr>
+        <td>@hostdeploy.DeploymentUnit.DeployableArtefact.DeployableArtefactName</td>
+        <td>@hostdeploy.Host.HostName</td>
+        <td>@hostdeploy.DeploymentUnit.Build.BuildLabel</td>
+    </tr>
+}
+</table>

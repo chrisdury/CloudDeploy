@@ -5,25 +5,39 @@
 
 <h2>@ViewBag.Title</h2>
 
-<ul>
-@foreach (var deploymentunit in Model.DeploymentUnits)
-{
-    <li>
-        @deploymentunit.DeployableArtefact.DeployableArtefactName
-        (@deploymentunit.Build.BuildLabel)
-        (@deploymentunit.ReleaseStatus)
-        <ul>
-            @foreach (var hostdeployment in deploymentunit.HostDeployments)
-            {
-                <li>
-                    @hostdeployment.Host.HostName (@hostdeployment.Host.HostRole)
-                    - @hostdeployment.ReleaseStatus
-                </li>
-            }
-        </ul>
 
-    </li>
+@using (Html.BeginForm()) {   
 
-
+    <ul>
+    @foreach (var deploymentunit in Model.DeploymentUnits)
+    {
+        <li>Deployment Unit
+            @deploymentunit.DeployableArtefact.DeployableArtefactName
+            (@deploymentunit.Build.BuildLabel)
+            (@deploymentunit.ReleaseStatus)
+            <ul>
+                @foreach (var hostdeployment in deploymentunit.HostDeployments)
+                {
+                    <li>Host Deployment:
+                        @Html.CheckBox("HostDeployment", false, new { @Value = hostdeployment.HostDeploymentId.ToString() })
+                        @hostdeployment.Host.HostName (@hostdeployment.Host.HostRole)
+                        - @hostdeployment.ReleaseStatus
+                    </li>
+                }
+            </ul>
+        </li>
+    }
+    </ul>    
+    
+    <select id="Action" name="Action">
+        <option>Accept</option>
+        <option>Install</option>
+        <option>Confirm</option>
+        <option>Rollback</option>
+        <option>Fail</option>
+    </select>
+    
+    
+    <input type="submit" value="apply actions" />
+    
 }
-</ul>
