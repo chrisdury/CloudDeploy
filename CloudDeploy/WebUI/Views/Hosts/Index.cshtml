@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<CloudDeploy.Model.Platform.Host>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Hosts";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn" })
 </p>
-<table>
+<table class="table table-striped table-bordered">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Environment)
@@ -35,9 +35,9 @@
             @Html.DisplayFor(modelItem => item.HostRole)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.HostID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.HostID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.HostID })
+            @Html.ActionLink("Edit", "Edit", new { id=item.HostID }, new { @class = "btn" } )
+            @Html.ActionLink("Details", "Details", new { id=item.HostID }, new { @class = "btn" })
+            @Html.ActionLink("Delete", "Delete", new { id=item.HostID }, new { @class = "btn" })
         </td>
     </tr>
 }

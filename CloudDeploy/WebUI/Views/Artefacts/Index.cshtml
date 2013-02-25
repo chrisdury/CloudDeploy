@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<CloudDeploy.Model.Platform.DeployableArtefact>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Artefacts";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn" })
 </p>
-<table>
+<table class="table table-striped table-bordered">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.DeployableArtefactName)
@@ -17,12 +17,12 @@
         <th>
             @Html.DisplayNameFor(model => model.FileName)
         </th>
-        <th>
+        <!--<th>
             @Html.DisplayNameFor(model => model.InstallationScript)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RollbackScript)
-        </th>
+        </th>-->
         <th>
             @Html.DisplayNameFor(model => model.HostRole)
         </th>
@@ -37,19 +37,19 @@
         <td>
             @Html.DisplayFor(modelItem => item.FileName)
         </td>
-        <td>
+       <!-- <td>
             @Html.DisplayFor(modelItem => item.InstallationScript)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RollbackScript)
-        </td>
+        </td>-->
         <td>
             @Html.DisplayFor(modelItem => item.HostRole)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.DeployableArtefactID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.DeployableArtefactID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.DeployableArtefactID })
+            @Html.ActionLink("Edit", "Edit", new { id=item.DeployableArtefactID },new { @class = "btn" }) |
+            @Html.ActionLink("Details", "Details", new { id=item.DeployableArtefactID },new { @class = "btn" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.DeployableArtefactID },new { @class = "btn" })
         </td>
     </tr>
 }

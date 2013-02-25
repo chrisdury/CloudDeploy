@@ -1,29 +1,40 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Deploy!";
 }
 
-<h2>Deployments</h2>
+<h2>@ViewBag.Title</h2>
 
+
+<table class="table table-bordered">
+    <tr>
+        <th>Release Package</th>
+        <th>Status</th>
+        <th></th>
+    </tr>
 @foreach (var release in ViewData["Releases"] as IQueryable<CloudDeploy.Model.Releases.ReleasePackage>)
 {
-    <li>
-        @release.ReleaseName (@release.ReleaseStatus) -
-        @Html.ActionLink("Status", "StatusOfReleasePackage", new { id = release.ReleasePackageID })
-        @Html.ActionLink("Deploy", "DeployReleasePackage", new { id = release.ReleasePackageID })
-        @Html.ActionLink("Rollback", "RollbackReleasePackage", new { id = release.ReleasePackageID })
-    </li>
+    <tr>
+        <td>@release.ReleaseName</td>
+        <td>@release.ReleaseStatus</td>
+        <td>
+            @Html.ActionLink("Status", "StatusOfReleasePackage", new { id = release.ReleasePackageID }, new { @class = "btn" })
+            @Html.ActionLink("Deploy", "DeployReleasePackage", new { id = release.ReleasePackageID }, new { @class = "btn" })
+            @Html.ActionLink("Rollback", "RollbackReleasePackage", new { id = release.ReleasePackageID }, new { @class = "btn" })
+        </td>
+    </tr>
 }
+
+</table>
 
 
 <h2>Current Catalog</h2>
 
-<table>
+<table class="table table-bordered">
     <tr>
         <th>Artefact</th>
         <th>Host</th>
         <th>Build</th>
     </tr>
-
 
 @foreach (var hostdeploy in ViewData["HostDeployments"] as IQueryable<CloudDeploy.Model.Releases.HostDeployment>)
 {

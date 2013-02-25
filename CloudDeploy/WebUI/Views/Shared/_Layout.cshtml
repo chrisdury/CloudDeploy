@@ -2,36 +2,41 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/bootstrap/css/bootstrap.min.css")
 </head>
 <body class="deploytool">
-    <header>
-        <div class="content-wrapper">
-            <div class="float-left">
-                <p class="site-title">
-                    <a href="~/">Deploy Tool</a>
-                </p>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="brand" href="/">Deploy Tool</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li><a href="~/Deploy">Deploy</a></li>
+                        <li><a href="~/Release">Releases</a></li>
+                        <li><a href="~/Build">Builds</a></li>
+                        <li><a href="~/Artefacts">Artefacts</a></li>
+                        <li><a href="~/Hosts">Hosts</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </header>
-    <menu>
-        <ol>
-            <li><a href="~/Deploy">Deploy</a></li>
-            <li><a href="~/Release">Releases</a></li>
-            <li><a href="~/Build">Builds</a></li>
-            <li><a href="~/Artefacts">Artefacts</a></li>
-            <li><a href="~/Hosts">Hosts</a></li>
-        </ol>
-    </menu>
-    <div id="body">
-
-        @RenderBody()
-       
+    </div>
+    <div class="container">
+        <div class="maincontent">
+            @RenderBody()
+        </div>
     </div>
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Content/bootstrap/js/bootstrap.min.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>
