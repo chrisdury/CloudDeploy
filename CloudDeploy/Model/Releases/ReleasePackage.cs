@@ -12,8 +12,8 @@ namespace CloudDeploy.Model.Releases
         public Guid ReleasePackageID { get; set; }
         public string ReleaseName { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public string PlatformEnvironment { get; set; }
-        public ReleaseStatus ReleaseStatus { get; set; }
+        public string PlatformEnvironment { get; set; } // shouldn't have this as releases should move through environments
+        public ReleaseStatus ReleaseStatus { get; set; } // this is the status of the artefacts availability, not of the release itself
         public int Status_Id 
         {
             get { return (int)ReleaseStatus; }

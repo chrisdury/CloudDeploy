@@ -56,6 +56,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReleaseContextTests.cs" />
     <Compile Include="UnitTest1.cs" />
+    <Compile Include="ArtefactCatalogTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Model.Tests\Model.Tests.csproj">

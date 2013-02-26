@@ -19,7 +19,7 @@ namespace WebUI.Controllers
         {
             ViewData.Add("Releases", db.GetReleasePackages());
 
-            ViewData.Add("HostDeployments", db.HostDeployments.Where(hd => hd.ReleaseStatus == ReleaseStatus.Complete).OrderBy(hd => hd.DeploymentUnit.DeployableArtefact.DeployableArtefactName));
+            ViewData.Add("HostDeployments", db.GetCurrentCatalogOfArtefacts());
 
 
             return View();

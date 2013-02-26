@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CloudDeploy.Model.Releases.Build" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAEEAEAAAAAgAAAAAQIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Releases\Build.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CloudDeploy.Model.Releases.DeploymentUnit">
+    <Position X="6" Y="2.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAgAAQCQAAQEAAAAAAgAAAAAgABAAAAAAAAAAAg=</HashCode>
+      <FileName>Releases\DeploymentUnit.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DeployableArtefact" />
+      <Property Name="Build" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CloudDeploy.Model.Releases.HostDeployment">
+    <Position X="2.75" Y="2.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AJAAAAgAAACQAAAEAAAAAAgAAAAGCABAAAAAAAAAAAA=</HashCode>
+      <FileName>Releases\HostDeployment.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Host" />
+      <Property Name="DeploymentUnit" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CloudDeploy.Model.Releases.ReleasePackage">
+    <Position X="9.5" Y="1.75" Width="2.75" />
+    <NestedTypes>
+      <Delegate Name="CloudDeploy.Model.Releases.ReleasePackage.DeployHander" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Releases\ReleasePackage.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ABAAAAgABAAIAAAUAAAAAAAAAAAAAABAAAABIYAQAAA=</HashCode>
+      <FileName>Releases\ReleasePackage.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="DeploymentUnits" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CloudDeploy.Model.Platform.DeployableArtefact">
+    <Position X="6" Y="6.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAABAAAAAAEAAAAAEAAAAAAAAAQAAAAAEBAAAA=</HashCode>
+      <FileName>Platform\DeployableArtefact.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CloudDeploy.Model.Platform.Host">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAACAAAAAAAEAAEAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Platform\Host.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

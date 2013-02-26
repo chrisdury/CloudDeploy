@@ -186,6 +186,27 @@ namespace CloudDeploy.Persistence.Contexts
 
         #endregion
 
+
+
+        public IQueryable<HostDeployment> GetCurrentCatalogOfArtefacts()
+        {
+            var deploymentUnits =  from hd in HostDeployments
+                   where hd.ReleaseStatus == ReleaseStatus.Complete
+                   group hd by hd.DeploymentUnit.DeployableArtefact.DeployableArtefactName into groupedHostDeployments
+                   let latestActivity = groupedHostDeployments.Max(h => h.LastActivityDate)
+                   select new
+                   {
+                       ArtefactName = groupedHostDeployments.Key,
+                       LastActivity = latestActivity,
+                       Unit = groupedHostDeployments.FirstOrDefault(g => g.DeploymentUnit.DeployableArtefact.DeployableArtefactName == groupedHostDeployments.Key),
+                       Artefact = groupedHostDeployments.FirstOrDefault(g => g.DeploymentUnit.DeployableArtefact.DeployableArtefactName == groupedHostDeployments.Key).DeploymentUnit.DeployableArtefact
+                   };
+
+            return from du in deploymentUnits
+                   select du.Unit;
+
+        }
+
         
 
         #region Release Package
