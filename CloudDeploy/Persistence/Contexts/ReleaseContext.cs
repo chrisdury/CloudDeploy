@@ -187,23 +187,42 @@ namespace CloudDeploy.Persistence.Contexts
         #endregion
 
 
+        public List<HostDeployment> GetCurrentCatalogOfArtefactsByEnvironment()
+        {
+            var g = from hd in GetCurrentCatalogOfArtefacts()
+                    group hd by hd.Host.Environment into grouping
+                    select grouping;
+
+            var hostDeployments = new List<HostDeployment>();
+            foreach (var i in g)
+            {
+                hostDeployments.AddRange(i.ToList());
+            }
+            return hostDeployments;
+        }
+
 
         public IQueryable<HostDeployment> GetCurrentCatalogOfArtefacts()
         {
-            var deploymentUnits =  from hd in HostDeployments
-                   where hd.ReleaseStatus == ReleaseStatus.Complete
-                   group hd by hd.DeploymentUnit.DeployableArtefact.DeployableArtefactName into groupedHostDeployments
-                   let latestActivity = groupedHostDeployments.Max(h => h.LastActivityDate)
-                   select new
-                   {
-                       ArtefactName = groupedHostDeployments.Key,
-                       LastActivity = latestActivity,
-                       Unit = groupedHostDeployments.FirstOrDefault(g => g.DeploymentUnit.DeployableArtefact.DeployableArtefactName == groupedHostDeployments.Key),
-                       Artefact = groupedHostDeployments.FirstOrDefault(g => g.DeploymentUnit.DeployableArtefact.DeployableArtefactName == groupedHostDeployments.Key).DeploymentUnit.DeployableArtefact
-                   };
+            var deploymentUnits = from hd in HostDeployments
+                                  where hd.ReleaseStatus == ReleaseStatus.Complete
+                                  group hd by new { hd.DeploymentUnit.DeployableArtefact.DeployableArtefactName, hd.Host.Environment, hd.Host.HostName } into groupedHostDeployments
+                                  let latestActivity = groupedHostDeployments.Max(la => la.LastActivityDate)
+                                  select new
+                                  {
+                                      ArtefactName = groupedHostDeployments.Key.DeployableArtefactName,
+                                      LastActivity = latestActivity,
+                                      Environment = groupedHostDeployments.Key.Environment,
+                                      HostName = groupedHostDeployments.Key.HostName,
+                                      Unit = groupedHostDeployments.FirstOrDefault(
+                                        ghd => ghd.DeploymentUnit.DeployableArtefact.DeployableArtefactName == groupedHostDeployments.Key.DeployableArtefactName &&
+                                               //ghd.LastActivityDate == groupedHostDeployments.Key.LastActivity &&
+                                               ghd.Host.Environment == groupedHostDeployments.Key.Environment &&
+                                               ghd.Host.HostName == groupedHostDeployments.Key.HostName)
+                                  };
 
-            return from du in deploymentUnits
-                   select du.Unit;
+            return from hdu in deploymentUnits
+                   select hdu.Unit;
 
         }
 

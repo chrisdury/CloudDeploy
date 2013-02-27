@@ -14,8 +14,8 @@
       <FileName>Releases\DeploymentUnit.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="DeployableArtefact" />
       <Property Name="Build" />
+      <Property Name="DeployableArtefact" />
     </ShowAsAssociation>
   </Class>
   <Class Name="CloudDeploy.Model.Releases.HostDeployment">

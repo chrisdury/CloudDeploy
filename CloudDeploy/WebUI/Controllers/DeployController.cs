@@ -18,10 +18,10 @@ namespace WebUI.Controllers
         public ActionResult Index()
         {
             ViewData.Add("Releases", db.GetReleasePackages());
-
             ViewData.Add("HostDeployments", db.GetCurrentCatalogOfArtefacts());
 
 
+            ViewData.Add("HostDeploymentsByEnvironment", db.GetCurrentCatalogOfArtefactsByEnvironment());
             return View();
         }
 

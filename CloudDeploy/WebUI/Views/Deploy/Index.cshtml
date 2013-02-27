@@ -11,23 +11,47 @@
         <th>Status</th>
         <th></th>
     </tr>
-@foreach (var release in ViewData["Releases"] as IQueryable<CloudDeploy.Model.Releases.ReleasePackage>)
-{
-    <tr>
-        <td>@release.ReleaseName</td>
-        <td>@release.ReleaseStatus</td>
-        <td>
-            @Html.ActionLink("Status", "StatusOfReleasePackage", new { id = release.ReleasePackageID }, new { @class = "btn" })
-            @Html.ActionLink("Deploy", "DeployReleasePackage", new { id = release.ReleasePackageID }, new { @class = "btn" })
-            @Html.ActionLink("Rollback", "RollbackReleasePackage", new { id = release.ReleasePackageID }, new { @class = "btn" })
-        </td>
-    </tr>
-}
+    @foreach (var release in ViewData["Releases"] as IQueryable<CloudDeploy.Model.Releases.ReleasePackage>)
+    {
+        <tr>
+            <td>@release.ReleaseName</td>
+            <td>@release.ReleaseStatus</td>
+            <td>
+                <div class="btn-group">
+                    @Html.ActionLink("Status", "StatusOfReleasePackage", new { id = release.ReleasePackageID }, new { @class = "btn" })
+                    @Html.ActionLink("Deploy", "DeployReleasePackage", new { id = release.ReleasePackageID }, new { @class = "btn" })
+                    @Html.ActionLink("Rollback", "RollbackReleasePackage", new { id = release.ReleasePackageID }, new { @class = "btn" })
+                </div>
+            </td>
+        </tr>
+    }
 
 </table>
 
 
 <h2>Current Catalog</h2>
+
+<h3>By Environment</h3>
+
+
+
+@foreach (var hostdeploy in ViewData["HostDeploymentsByEnvironment"] as List<CloudDeploy.Model.Releases.HostDeployment>)
+{
+    <p>
+        @hostdeploy.DeploymentUnit.DeployableArtefact.DeployableArtefactName
+    , 
+        @hostdeploy.Host.HostName
+    ,
+        @hostdeploy.Host.Environment
+
+    </p>
+    
+}
+
+
+
+
+<!--
 
 <table class="table table-bordered">
     <tr>
@@ -36,12 +60,12 @@
         <th>Build</th>
     </tr>
 
-@foreach (var hostdeploy in ViewData["HostDeployments"] as IQueryable<CloudDeploy.Model.Releases.HostDeployment>)
-{
-    <tr>
-        <td>@hostdeploy.DeploymentUnit.DeployableArtefact.DeployableArtefactName</td>
-        <td>@hostdeploy.Host.HostName</td>
-        <td>@hostdeploy.DeploymentUnit.Build.BuildLabel</td>
-    </tr>
-}
-</table>
+    @foreach (var hostdeploy in ViewData["HostDeployments"] as IQueryable<CloudDeploy.Model.Releases.HostDeployment>)
+    {
+        <tr>
+            <td>@hostdeploy.DeploymentUnit.DeployableArtefact.DeployableArtefactName</td>
+            <td>@hostdeploy.Host.HostName</td>
+            <td>@hostdeploy.DeploymentUnit.Build.BuildLabel</td>
+        </tr>
+    }
+</table>-->
