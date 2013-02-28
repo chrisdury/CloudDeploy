@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
+	@Styles.Render("~/Content/bootstrap/css/spacelab/bootstrap.min.css")
     @Scripts.Render("~/bundles/modernizr")
-    @Styles.Render("~/Content/bootstrap/css/spacelab/bootstrap.min.css")
+	@Scripts.Render("~/bundles/jquery")    
 </head>
 <body class="deploytool">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -29,9 +30,9 @@
         <div class="maincontent">
             @RenderBody()
         </div>
-    </div>
-    @Scripts.Render("~/bundles/jquery")
+    </div>    
     @Scripts.Render("~/Content/bootstrap/js/bootstrap.min.js")
+	@Scripts.Render("~/Scripts/DataTables-1.9.4/media/js/jquery.dataTables.min.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>

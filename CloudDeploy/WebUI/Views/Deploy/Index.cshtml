@@ -1,4 +1,5 @@
-﻿@{
+﻿@using MvcContrib.UI.Grid
+@{
     ViewBag.Title = "Deploy!";
 }
 
@@ -32,40 +33,52 @@
 <h2>Current Catalog</h2>
 
 <h3>By Environment</h3>
-
-
-
-@foreach (var hostdeploy in ViewData["HostDeploymentsByEnvironment"] as List<CloudDeploy.Model.Releases.HostDeployment>)
+<div class="accordion" id="ArtefactAccordion">
+@foreach (var environment in ViewData["Environments"] as IQueryable<string>)
 {
-    <p>
-        @hostdeploy.DeploymentUnit.DeployableArtefact.DeployableArtefactName
-    , 
-        @hostdeploy.Host.HostName
-    ,
-        @hostdeploy.Host.Environment
+  <div class="accordion-group">
+    <div class="accordion-heading">
+      <a class="accordion-toggle" data-toggle="collapse" data-parent="#ArtefactAccordion" href="#by_environment_@environment">
+        @environment
+      </a>
+    </div>
+    <div id="by_environment_@environment" class="accordion-body collapse in">
+      <div class="accordion-inner">        
 
-    </p>
-    
+		<table class="table table-bordered dtTable">
+			<thead>
+				<tr>
+					<th>Host</th>
+					<th>Artefact</th>
+					<th>Build</th>
+				</tr>
+			</thead>
+			<tbody>
+			@foreach (var hostdeploy in (ViewData["HostDeployments"] as IQueryable<CloudDeploy.Model.Releases.HostDeployment>).Where(hd => hd.Host.Environment == @environment))
+			{
+				<tr>					
+					<td>@hostdeploy.Host.HostName</td>
+					<td>@hostdeploy.DeploymentUnit.DeployableArtefact.DeployableArtefactName</td>
+					<td>@hostdeploy.DeploymentUnit.Build.BuildLabel</td>
+				</tr>
+			}
+			</tbody>
+		</table>
+      </div>
+    </div>
+  </div>
 }
+</div>
+<script type="text/javascript" language="javascript">
+	$(document).ready(function () {
+		$(".dtTable").dataTable({
+			"bPaginate": true,
+			"bLengthChange": false,
+			"bFilter": true,
+			"bSort": true,
+			"bInfo": false,
+			"bAutoWidth": false
+		});
+	});
+</script>
 
-
-
-
-<!--
-
-<table class="table table-bordered">
-    <tr>
-        <th>Artefact</th>
-        <th>Host</th>
-        <th>Build</th>
-    </tr>
-
-    @foreach (var hostdeploy in ViewData["HostDeployments"] as IQueryable<CloudDeploy.Model.Releases.HostDeployment>)
-    {
-        <tr>
-            <td>@hostdeploy.DeploymentUnit.DeployableArtefact.DeployableArtefactName</td>
-            <td>@hostdeploy.Host.HostName</td>
-            <td>@hostdeploy.DeploymentUnit.Build.BuildLabel</td>
-        </tr>
-    }
-</table>-->

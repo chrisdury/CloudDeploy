@@ -18,10 +18,10 @@ namespace WebUI.Controllers
         public ActionResult Index()
         {
             ViewData.Add("Releases", db.GetReleasePackages());
-            ViewData.Add("HostDeployments", db.GetCurrentCatalogOfArtefacts());
+            ViewData.Add("HostDeployments", db.GetCurrentCatalogOfArtefacts().OrderBy(hd=>hd.Host.HostName));
 
 
-            ViewData.Add("HostDeploymentsByEnvironment", db.GetCurrentCatalogOfArtefactsByEnvironment());
+            ViewData.Add("Environments", db.GetEnvironments());
             return View();
         }
 
@@ -29,7 +29,7 @@ namespace WebUI.Controllers
         public ActionResult DeployReleasePackage(Guid id)
         {
             var releasePackage = db.GetReleasePackages().Single(rp => rp.ReleasePackageID == id);
-            ViewData.Add("Environments", new List<SelectListItem>(new SelectListItem[] { new SelectListItem() { Text = "TEST" }, new SelectListItem() { Text = "STAGING" } }));
+            ViewData.Add("Environments", new List<SelectListItem>(new SelectListItem[] { new SelectListItem() { Text = "TEST" }, new SelectListItem() { Text = "STAGE" }, new SelectListItem() { Text = "PROD" } }));
 
             return View(releasePackage);
         }

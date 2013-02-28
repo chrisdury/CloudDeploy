@@ -187,18 +187,10 @@ namespace CloudDeploy.Persistence.Contexts
         #endregion
 
 
-        public List<HostDeployment> GetCurrentCatalogOfArtefactsByEnvironment()
+        public IQueryable<string> GetEnvironments()
         {
-            var g = from hd in GetCurrentCatalogOfArtefacts()
-                    group hd by hd.Host.Environment into grouping
-                    select grouping;
-
-            var hostDeployments = new List<HostDeployment>();
-            foreach (var i in g)
-            {
-                hostDeployments.AddRange(i.ToList());
-            }
-            return hostDeployments;
+         return (from hd in GetCurrentCatalogOfArtefacts()
+                     select hd.Host.Environment).Distinct();
         }
 
 
