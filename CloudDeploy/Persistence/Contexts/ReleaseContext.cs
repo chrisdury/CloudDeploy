@@ -193,7 +193,7 @@ namespace CloudDeploy.Persistence.Contexts
                      select hd.Host.Environment).Distinct();
         }
 
-
+        // TODO: refactor this into domain model
         public IQueryable<HostDeployment> GetCurrentCatalogOfArtefacts()
         {
             var deploymentUnits = from hd in HostDeployments
