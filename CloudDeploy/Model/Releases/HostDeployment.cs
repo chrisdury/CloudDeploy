@@ -6,6 +6,7 @@ using CloudDeploy.Model.Platform;
 
 namespace CloudDeploy.Model.Releases
 {
+    
     public class HostDeployment
     {
         public Guid HostDeploymentId { get; set; }

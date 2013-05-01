@@ -20,7 +20,7 @@ namespace CloudDeploy.Model.Releases
             set { ReleaseStatus = (ReleaseStatus)value; }
         }
 
-        public DeploymentUnit() { }
+        public DeploymentUnit() { HostDeployments = new List<HostDeployment>(); }
 
         public DeploymentUnit(Build build, DeployableArtefact deployableArtefact)
         {

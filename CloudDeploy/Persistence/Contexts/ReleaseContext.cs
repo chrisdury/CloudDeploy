@@ -16,7 +16,11 @@ namespace CloudDeploy.Persistence.Contexts
         public DbSet<DeployableArtefact> DeployableArtefacts { get; set; }
         public DbSet<HostDeployment> HostDeployments { get; set; }
         public DbSet<Host> Hosts { get; set; }
-        public ReleaseContext() : base("name=CloudDeploy.Model") { }
+        public ReleaseContext() : base("name=CloudDeploy.Model") 
+        {
+            //base.Configuration.ProxyCreationEnabled = false;
+        
+        }
 
         #region Hosts
 
